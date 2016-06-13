@@ -33,9 +33,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
-public class ExpandableLayoutItem extends RelativeLayout {
+public class ExpandableLayoutItem extends FrameLayout implements ExpandableBaseItem {
+
     private Boolean isAnimationRunning = false;
     private Boolean isOpened = false;
     private Integer duration;
@@ -57,7 +57,8 @@ public class ExpandableLayoutItem extends RelativeLayout {
         init(context, attrs);
     }
 
-    private void init(final Context context, AttributeSet attrs) {
+    @Override
+    public void init(final Context context, AttributeSet attrs) {
         final View rootView = View.inflate(context, R.layout.view_expandable, this);
         headerLayout = (FrameLayout) rootView.findViewById(R.id.view_expandable_headerlayout);
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableLayout);
@@ -75,9 +76,9 @@ public class ExpandableLayoutItem extends RelativeLayout {
         final View headerView = View.inflate(context, headerID, null);
         headerView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         headerLayout.addView(headerView);
-        setTag(ExpandableLayoutItem.class.getName());
+        setTag(ExpandableBaseItem.class.getName());
         final View contentView = View.inflate(context, contentID, null);
-        contentView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        contentView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contentLayout.addView(contentView);
         contentLayout.setVisibility(GONE);
 
@@ -95,7 +96,8 @@ public class ExpandableLayoutItem extends RelativeLayout {
 
     }
 
-    private void expand(final View v) {
+    @Override
+    public void expand(final View v) {
         isOpened = true;
         v.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         final int targetHeight = v.getMeasuredHeight();
@@ -119,7 +121,8 @@ public class ExpandableLayoutItem extends RelativeLayout {
         v.startAnimation(animation);
     }
 
-    private void collapse(final View v) {
+    @Override
+    public void collapse(final View v) {
         isOpened = false;
         final int initialHeight = v.getMeasuredHeight();
         Animation animation = new Animation() {
@@ -144,6 +147,7 @@ public class ExpandableLayoutItem extends RelativeLayout {
         v.startAnimation(animation);
     }
 
+    @Override
     public void hideNow() {
         contentLayout.getLayoutParams().height = 0;
         contentLayout.invalidate();
@@ -151,6 +155,7 @@ public class ExpandableLayoutItem extends RelativeLayout {
         isOpened = false;
     }
 
+    @Override
     public void showNow() {
         if (!this.isOpened()) {
             contentLayout.setVisibility(VISIBLE);
@@ -160,10 +165,12 @@ public class ExpandableLayoutItem extends RelativeLayout {
         }
     }
 
+    @Override
     public Boolean isOpened() {
         return isOpened;
     }
 
+    @Override
     public void show() {
         if (!isAnimationRunning) {
             expand(contentLayout);
@@ -177,14 +184,17 @@ public class ExpandableLayoutItem extends RelativeLayout {
         }
     }
 
+    @Override
     public FrameLayout getHeaderLayout() {
         return headerLayout;
     }
 
+    @Override
     public FrameLayout getContentLayout() {
         return contentLayout;
     }
 
+    @Override
     public void hide() {
         if (!isAnimationRunning) {
             collapse(contentLayout);
@@ -199,7 +209,13 @@ public class ExpandableLayoutItem extends RelativeLayout {
         closeByUser = false;
     }
 
+    @Override
     public Boolean getCloseByUser() {
         return closeByUser;
+    }
+
+    @Override
+    public void setOnClickListener(OnClickListener onClickListener) {
+        super.setOnClickListener(onClickListener);
     }
 }

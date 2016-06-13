@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Created by hendraanggrian on 6/13/16.
+ * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public class ExpandableLayoutRecyclerView extends RecyclerView {
 
@@ -68,7 +68,7 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
 
         @Override
         public void onBindViewHolder(final VH holder, final int position) {
-            holder.getExpandableLayoutItem().setOnClickListener(new OnClickListener() {
+            holder.getItem().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     performClick(position);
@@ -81,12 +81,12 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
 
             for (int index = 0; index < getItemCount(); ++index) {
                 if (index != (position - getLayoutManager().findFirstVisibleItemPosition())) {
-                    ExpandableLayoutItem currentExpandableLayout = (ExpandableLayoutItem) getLayoutManager().findViewByPosition(index).findViewWithTag(ExpandableLayoutItem.class.getName());
+                    ExpandableBaseItem currentExpandableLayout = (ExpandableBaseItem) getLayoutManager().findViewByPosition(index).findViewWithTag(ExpandableBaseItem.class.getName());
                     currentExpandableLayout.hide();
                 }
             }
 
-            ExpandableLayoutItem expandableLayout = (ExpandableLayoutItem) getLayoutManager().findViewByPosition(position - getLayoutManager().findFirstVisibleItemPosition()).findViewWithTag(ExpandableLayoutItem.class.getName());
+            ExpandableBaseItem expandableLayout = (ExpandableBaseItem) getLayoutManager().findViewByPosition(position - getLayoutManager().findFirstVisibleItemPosition()).findViewWithTag(ExpandableBaseItem.class.getName());
 
             if (expandableLayout.isOpened())
                 expandableLayout.hide();
@@ -101,6 +101,6 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
             super(itemView);
         }
 
-        public abstract ExpandableLayoutItem getExpandableLayoutItem();
+        public abstract ExpandableBaseItem getItem();
     }
 }

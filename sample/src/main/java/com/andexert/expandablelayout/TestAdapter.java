@@ -9,7 +9,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutItem;
+import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableCardItem;
+import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableBaseItem;
 import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRecyclerView;
 
 /**
@@ -51,15 +52,15 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
     }
 
     public static class ViewHolder extends ExpandableLayoutRecyclerView.ViewHolder {
-        public ExpandableLayoutItem expandableLayoutItem;
+        public ExpandableCardItem expandableLayoutItem;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            expandableLayoutItem = (ExpandableLayoutItem) itemView.findViewById(R.id.row);
+            expandableLayoutItem = (ExpandableCardItem) itemView.findViewById(R.id.row);
         }
 
         @Override
-        public ExpandableLayoutItem getExpandableLayoutItem() {
+        public ExpandableBaseItem getItem() {
             return expandableLayoutItem;
         }
     }

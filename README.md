@@ -8,14 +8,36 @@ Download
 --------
 
 ```gradle
-compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.0.3'
+compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.0.4'
 ```
 
 
 Usage
 -----
 
-Create a class extending ExpandableLayoutRecyclerView.Adapter:
+Create a row of your RecyclerView. It can be `ExpandableLayoutItem` which is FrameLayout or `ExpandableCardItem` which is CardView:
+
+```xml
+<io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutItem
+    android:id="@+id/row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#e74c3c"
+    app:el_contentLayout="@layout/view_content"
+    app:el_headerLayout="@layout/view_header"/>
+    
+<io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableCardItem
+    android:id="@+id/row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:selectableItemBackground"
+    app:cardBackgroundColor="#e74c3c"
+    app:cardCornerRadius="2dp"
+    app:el_contentLayout="@layout/view_content"
+    app:el_headerLayout="@layout/view_header"/>
+```
+
+Create your ExpandableLayoutRecyclerView.Adapter:
 
 ```java
 public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapter.ViewHolder> {
@@ -42,11 +64,23 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
         }
     
         @Override
-        public ExpandableLayoutItem getExpandableLayoutItem() {
+        public ExpandableBaseItem getExpandableLayoutItem() {
             return expandableLayoutItem;
         }
     }
 }
+```
+
+Have an ExpandableRecyclerView somewhere in your app:
+
+```xml
+<io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRecyclerView
+    android:id="@+id/recyclerView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"/>
 ```
 
 Then pass LinearLayoutManager to the adapter:

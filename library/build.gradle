@@ -20,13 +20,14 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
 }
 
 publish {
     userOrg = 'hendraanggrian'
     groupId = 'io.github.hendraanggrian'
     artifactId = 'expandablelayoutrecyclerview'
-    publishVersion = '0.0.3'
+    publishVersion = '0.0.4'
     desc = 'RecyclerView implementation of traex\'s ExpandableLayout. https://github.com/traex/ExpandableLayout.'
     website = 'https://github.com/hendraanggrian/ExpandableLayoutRecyclerView'
 
