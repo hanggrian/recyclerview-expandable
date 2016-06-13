@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.View;
 
 /**
  * Created by hendraanggrian on 6/13/16.
@@ -65,8 +66,14 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
             return layoutManager;
         }
 
-        public int getPosition() {
-            return position;
+        @Override
+        public void onBindViewHolder(final VH holder, final int position) {
+            holder.getExpandableLayoutItem().setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    performClick(position);
+                }
+            });
         }
 
         public void performClick(int position) {
@@ -86,5 +93,14 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
             else
                 expandableLayout.show();
         }
+    }
+
+    public static abstract class ViewHolder extends RecyclerView.ViewHolder {
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        public abstract ExpandableLayoutItem getExpandableLayoutItem();
     }
 }

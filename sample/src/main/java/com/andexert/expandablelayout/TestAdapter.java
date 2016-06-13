@@ -1,6 +1,5 @@
 package com.andexert.expandablelayout;
 
-import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRec
  */
 public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapter.ViewHolder> {
 
-    private Context context;
     private List<String> list;
 
     public TestAdapter(LinearLayoutManager lm) {
@@ -35,25 +33,16 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
 
     @Override
     public TestAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        View view = LayoutInflater.from(context).inflate(R.layout.view_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_row, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(TestAdapter.ViewHolder holder, final int position) {
-        final TextView header_text = (TextView) holder.row.getHeaderLayout().findViewById(R.id.header_text);
+        super.onBindViewHolder(holder, position);
 
+        final TextView header_text = (TextView) holder.expandableLayoutItem.getHeaderLayout().findViewById(R.id.header_text);
         header_text.setText(list.get(position));
-
-        header_text.setText(position == 0 ? list.get(position) : "NGENTOT");
-
-        holder.row.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                performClick(position);
-            }
-        });
     }
 
     @Override
@@ -62,11 +51,16 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
     }
 
     public static class ViewHolder extends ExpandableLayoutRecyclerView.ViewHolder {
-        public ExpandableLayoutItem row;
+        public ExpandableLayoutItem expandableLayoutItem;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            row = (ExpandableLayoutItem) itemView.findViewById(R.id.row);
+            expandableLayoutItem = (ExpandableLayoutItem) itemView.findViewById(R.id.row);
+        }
+
+        @Override
+        public ExpandableLayoutItem getExpandableLayoutItem() {
+            return expandableLayoutItem;
         }
     }
 }

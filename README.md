@@ -8,7 +8,7 @@ Download
 --------
 
 ```gradle
-compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.0.2'
+compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.0.3'
 ```
 
 
@@ -20,32 +20,30 @@ Create a class extending ExpandableLayoutRecyclerView.Adapter:
 ```java
 public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapter.ViewHolder> {
 
-    private Context context;
-    private List<String> list;
-
     public TestAdapter(LinearLayoutManager lm) {
         super(lm);
+        ...
+    }
+
+    @Override
+    public void onBindViewHolder(TestAdapter.ViewHolder holder, final int position) {
+        super.onBindViewHolder(holder, position);
         ...
     }
     
     ...
 
-    @Override
-    public void onBindViewHolder(TestAdapter.ViewHolder holder, final int position) {
-        holder.row.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                performClick(position);
-            }
-        });
-    }
-
     public static class ViewHolder extends ExpandableLayoutRecyclerView.ViewHolder {
-        public ExpandableLayoutItem row;
-
+        public ExpandableLayoutItem expandableLayoutItem;
+    
         public ViewHolder(View itemView) {
             super(itemView);
-            row = (ExpandableLayoutItem) itemView.findViewById(R.id.row);
+            expandableLayoutItem = (ExpandableLayoutItem) itemView.findViewById(R.id.row);
+        }
+    
+        @Override
+        public ExpandableLayoutItem getExpandableLayoutItem() {
+            return expandableLayoutItem;
         }
     }
 }
