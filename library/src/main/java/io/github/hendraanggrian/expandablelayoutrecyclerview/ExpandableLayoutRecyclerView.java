@@ -23,10 +23,51 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
         super(context, attrs, defStyle);
     }
 
-    public static abstract class Adapter<VH extends ViewHolder> extends RecyclerView.Adapter<VH> {
-        public Integer position = -1;
+    @Override
+    public void addOnScrollListener(OnScrollListener listener) {
+        if (!(listener instanceof OnExpandableLayoutScrollListener))
+            throw new IllegalArgumentException("OnScrollListner must be an OnExpandableLayoutScrollListener");
+        super.addOnScrollListener(listener);
+    }
 
-        public abstract LinearLayoutManager getLayoutManager();
+    public class OnExpandableLayoutScrollListener extends OnScrollListener {
+        private int scrollState = 0;
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            this.scrollState = newState;
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            if (scrollState != SCROLL_STATE_IDLE) {
+                for (int index = 0; index < getChildCount(); ++index) {
+                    ExpandableLayoutItem currentExpandableLayout = (ExpandableLayoutItem) getChildAt(index).findViewWithTag(ExpandableLayoutItem.class.getName());
+                    if (currentExpandableLayout.isOpened() && index != (((Adapter) getAdapter()).position - ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition())) {
+                        currentExpandableLayout.hideNow();
+                    } else if (!currentExpandableLayout.getCloseByUser() && !currentExpandableLayout.isOpened() && index == ((((Adapter) getAdapter()).position - ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition()))) {
+                        currentExpandableLayout.showNow();
+                    }
+                }
+            }
+        }
+    }
+
+    public static abstract class Adapter<VH extends ViewHolder> extends RecyclerView.Adapter<VH> {
+        private final LinearLayoutManager layoutManager;
+        private Integer position = -1;
+
+        public Adapter(LinearLayoutManager layoutManager) {
+            this.layoutManager = layoutManager;
+        }
+
+        public LinearLayoutManager getLayoutManager() {
+            return layoutManager;
+        }
+
+        public int getPosition() {
+            return position;
+        }
 
         public void performClick(int position) {
             this.position = position;

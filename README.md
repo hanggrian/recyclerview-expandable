@@ -8,7 +8,7 @@ Download
 --------
 
 ```gradle
-compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.0.1'
+compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.0.2'
 ```
 
 
@@ -22,10 +22,9 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
 
     private Context context;
     private List<String> list;
-    private LinearLayoutManager lm;
 
     public TestAdapter(LinearLayoutManager lm) {
-        this.lm = lm;
+        super(lm);
         ...
     }
     
@@ -39,11 +38,6 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
                 performClick(position);
             }
         });
-    }
-
-    @Override
-    public LinearLayoutManager getLayoutManager() {
-        return lm;
     }
 
     public static class ViewHolder extends ExpandableLayoutRecyclerView.ViewHolder {
@@ -62,8 +56,9 @@ Then pass LinearLayoutManager to the adapter:
 ```java
 TestAdapter adapter = new TestAdapter(new LinearLayoutManager(this));
 
-expandableLayoutRecyclerView.setAdapter(adapter);
-expandableLayoutRecyclerView.setLayoutManager(adapter.getLayoutManager());
+ExpandableLayoutRecyclerView elRecyclerView = (ExpandableLayoutRecyclerView) findViewById(R.id.recyclerView);
+elRecyclerView.setAdapter(adapter);
+elRecyclerView.setLayoutManager(adapter.getLayoutManager());
 ```
 
 

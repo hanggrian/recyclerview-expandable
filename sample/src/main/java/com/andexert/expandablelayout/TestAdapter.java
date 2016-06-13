@@ -7,11 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutItem;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutItem;
 import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRecyclerView;
 
 /**
@@ -21,10 +20,9 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
 
     private Context context;
     private List<String> list;
-    private LinearLayoutManager lm;
 
     public TestAdapter(LinearLayoutManager lm) {
-        this.lm = lm;
+        super(lm);
         list = new ArrayList<>();
         list.add("Loren");
         list.add("Ipsum");
@@ -48,7 +46,8 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
 
         header_text.setText(list.get(position));
 
-        holder.row.setTag(ExpandableLayoutItem.class.getName());
+        header_text.setText(position == 0 ? list.get(position) : "NGENTOT");
+
         holder.row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,11 +59,6 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
     @Override
     public int getItemCount() {
         return list.size();
-    }
-
-    @Override
-    public LinearLayoutManager getLayoutManager() {
-        return lm;
     }
 
     public static class ViewHolder extends ExpandableLayoutRecyclerView.ViewHolder {
