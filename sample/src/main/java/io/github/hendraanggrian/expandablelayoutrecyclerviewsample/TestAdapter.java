@@ -1,4 +1,4 @@
-package com.andexert.expandablelayout;
+package io.github.hendraanggrian.expandablelayoutrecyclerviewsample;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;

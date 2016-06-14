@@ -1,7 +1,7 @@
-package com.andexert.expandablelayout;
+package io.github.hendraanggrian.expandablelayoutrecyclerviewsample;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRecyclerView;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
