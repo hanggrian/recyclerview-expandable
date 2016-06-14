@@ -79,14 +79,14 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
         public void performClick(int position) {
             this.position = position;
 
-            for (int index = 0; index < getItemCount(); ++index) {
+            for (int index = 0; index < getLayoutManager().getChildCount(); ++index) {
                 if (index != (position - getLayoutManager().findFirstVisibleItemPosition())) {
-                    ExpandableBaseItem currentExpandableLayout = (ExpandableBaseItem) getLayoutManager().findViewByPosition(index).findViewWithTag(ExpandableBaseItem.class.getName());
+                    ExpandableBaseItem currentExpandableLayout = (ExpandableBaseItem) getLayoutManager().getChildAt(index).findViewWithTag(ExpandableBaseItem.class.getName());
                     currentExpandableLayout.hide();
                 }
             }
 
-            ExpandableBaseItem expandableLayout = (ExpandableBaseItem) getLayoutManager().findViewByPosition(position - getLayoutManager().findFirstVisibleItemPosition()).findViewWithTag(ExpandableBaseItem.class.getName());
+            ExpandableBaseItem expandableLayout = (ExpandableBaseItem) getLayoutManager().getChildAt(position - getLayoutManager().findFirstVisibleItemPosition()).findViewWithTag(ExpandableBaseItem.class.getName());
 
             if (expandableLayout.isOpened())
                 expandableLayout.hide();

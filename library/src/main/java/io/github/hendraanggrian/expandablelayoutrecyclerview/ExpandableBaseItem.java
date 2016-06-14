@@ -32,6 +32,13 @@ public interface ExpandableBaseItem {
 
     Boolean getCloseByUser();
 
-    void setOnClickListener(View.OnClickListener onClickListener);
+    void setOnClickListener(View.OnClickListener listener);
 
+    void setOnExpandListener(OnExpandListener listener);
+
+    interface OnExpandListener {
+        void onExpanding();
+
+        void onCollapsing();
+    }
 }

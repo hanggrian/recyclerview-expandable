@@ -1,6 +1,7 @@
 package com.andexert.expandablelayout;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableCardItem;
 import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableBaseItem;
+import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableCardItem;
 import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRecyclerView;
 
 /**
@@ -30,6 +31,13 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
         list.add("Android");
         list.add("Totally");
         list.add("Rocks");
+        list.add("Loren");
+        list.add("Ipsum");
+        list.add("Hello");
+        list.add("World");
+        list.add("Android");
+        list.add("Totally");
+        list.add("Rocks");
     }
 
     @Override
@@ -41,6 +49,18 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
     @Override
     public void onBindViewHolder(TestAdapter.ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
+
+        holder.expandableLayoutItem.setOnExpandListener(new ExpandableBaseItem.OnExpandListener() {
+            @Override
+            public void onExpanding() {
+                Log.d("TAG", "EXPANDING");
+            }
+
+            @Override
+            public void onCollapsing() {
+                Log.d("TAG", "COLLAPSING");
+            }
+        });
 
         final TextView header_text = (TextView) holder.expandableLayoutItem.getHeaderLayout().findViewById(R.id.header_text);
         header_text.setText(list.get(position));

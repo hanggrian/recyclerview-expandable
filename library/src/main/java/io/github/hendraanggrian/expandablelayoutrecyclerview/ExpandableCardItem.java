@@ -44,6 +44,9 @@ public class ExpandableCardItem extends CardView implements ExpandableBaseItem {
     private FrameLayout headerLayout;
     private Boolean closeByUser = true;
 
+    private OnExpandListener listener;
+    private boolean collapsingCalled = false;
+
     public ExpandableCardItem(Context context) {
         super(context);
     }
@@ -112,7 +115,6 @@ public class ExpandableCardItem extends CardView implements ExpandableBaseItem {
                 v.requestLayout();
             }
 
-
             @Override
             public boolean willChangeBounds() {
                 return true;
@@ -174,6 +176,11 @@ public class ExpandableCardItem extends CardView implements ExpandableBaseItem {
     @Override
     public void show() {
         if (!isAnimationRunning) {
+            if (listener != null) {
+                listener.onExpanding();
+                collapsingCalled = false;
+            }
+
             expand(contentLayout);
             isAnimationRunning = true;
             new Handler().postDelayed(new Runnable() {
@@ -198,6 +205,11 @@ public class ExpandableCardItem extends CardView implements ExpandableBaseItem {
     @Override
     public void hide() {
         if (!isAnimationRunning) {
+            if (listener != null && !collapsingCalled) {
+                listener.onCollapsing();
+                collapsingCalled = true;
+            }
+
             collapse(contentLayout);
             isAnimationRunning = true;
             new Handler().postDelayed(new Runnable() {
@@ -213,5 +225,10 @@ public class ExpandableCardItem extends CardView implements ExpandableBaseItem {
     @Override
     public Boolean getCloseByUser() {
         return closeByUser;
+    }
+
+    @Override
+    public void setOnExpandListener(OnExpandListener listener) {
+        this.listener = listener;
     }
 }

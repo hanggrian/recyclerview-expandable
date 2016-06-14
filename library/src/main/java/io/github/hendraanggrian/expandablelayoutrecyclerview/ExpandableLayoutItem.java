@@ -26,6 +26,7 @@ package io.github.hendraanggrian.expandablelayoutrecyclerview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,7 +35,7 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.FrameLayout;
 
-public class ExpandableLayoutItem extends FrameLayout implements ExpandableBaseItem {
+public class ExpandableLayoutItem extends CardView implements ExpandableBaseItem {
 
     private Boolean isAnimationRunning = false;
     private Boolean isOpened = false;
@@ -42,6 +43,9 @@ public class ExpandableLayoutItem extends FrameLayout implements ExpandableBaseI
     private FrameLayout contentLayout;
     private FrameLayout headerLayout;
     private Boolean closeByUser = true;
+
+    private OnExpandListener listener;
+    private boolean collapsingCalled = false;
 
     public ExpandableLayoutItem(Context context) {
         super(context);
@@ -111,7 +115,6 @@ public class ExpandableLayoutItem extends FrameLayout implements ExpandableBaseI
                 v.requestLayout();
             }
 
-
             @Override
             public boolean willChangeBounds() {
                 return true;
@@ -173,6 +176,11 @@ public class ExpandableLayoutItem extends FrameLayout implements ExpandableBaseI
     @Override
     public void show() {
         if (!isAnimationRunning) {
+            if (listener != null) {
+                listener.onExpanding();
+                collapsingCalled = false;
+            }
+
             expand(contentLayout);
             isAnimationRunning = true;
             new Handler().postDelayed(new Runnable() {
@@ -197,6 +205,11 @@ public class ExpandableLayoutItem extends FrameLayout implements ExpandableBaseI
     @Override
     public void hide() {
         if (!isAnimationRunning) {
+            if (listener != null && !collapsingCalled) {
+                listener.onCollapsing();
+                collapsingCalled = true;
+            }
+
             collapse(contentLayout);
             isAnimationRunning = true;
             new Handler().postDelayed(new Runnable() {
@@ -215,7 +228,7 @@ public class ExpandableLayoutItem extends FrameLayout implements ExpandableBaseI
     }
 
     @Override
-    public void setOnClickListener(OnClickListener onClickListener) {
-        super.setOnClickListener(onClickListener);
+    public void setOnExpandListener(OnExpandListener listener) {
+        this.listener = listener;
     }
 }

@@ -8,7 +8,7 @@ Download
 --------
 
 ```gradle
-compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.0.4'
+compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.0.6'
 ```
 
 
@@ -91,6 +91,26 @@ TestAdapter adapter = new TestAdapter(new LinearLayoutManager(this));
 ExpandableLayoutRecyclerView elRecyclerView = (ExpandableLayoutRecyclerView) findViewById(R.id.recyclerView);
 elRecyclerView.setAdapter(adapter);
 elRecyclerView.setLayoutManager(adapter.getLayoutManager());
+```
+
+
+Optional
+--------
+
+Detect onExpand and onCollapse:
+
+```java
+expandableLayoutItem.setOnExpandListener(new ExpandableBaseItem.OnExpandListener() {
+    @Override
+    public void onExpanding() {
+        Log.d("TAG", "EXPANDING");
+    }
+
+    @Override
+    public void onCollapsing() {
+        Log.d("TAG", "COLLAPSING");
+    }
+});
 ```
 
 
