@@ -1,13 +1,14 @@
 package io.github.hendraanggrian.expandablelayoutrecyclerviewsample;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableBaseItem;
@@ -19,36 +20,27 @@ import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRec
  */
 public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapter.ViewHolder> {
 
-    private List<String> list;
+    private Context context;
+    private List<Item> items;
 
-    public TestAdapter(LinearLayoutManager lm) {
+    public TestAdapter(LinearLayoutManager lm, List<Item> items) {
         super(lm);
-        list = new ArrayList<>();
-        list.add("Loren");
-        list.add("Ipsum");
-        list.add("Hello");
-        list.add("World");
-        list.add("Android");
-        list.add("Totally");
-        list.add("Rocks");
-        list.add("Loren");
-        list.add("Ipsum");
-        list.add("Hello");
-        list.add("World");
-        list.add("Android");
-        list.add("Totally");
-        list.add("Rocks");
+        this.items = items;
     }
 
     @Override
     public TestAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_row, parent, false);
+        context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.view_row, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(TestAdapter.ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
+        final Item item = items.get(position);
+
+        //holder.header.
 
         holder.expandableLayoutItem.setOnExpandListener(new ExpandableBaseItem.OnExpandListener() {
             @Override
@@ -61,22 +53,24 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
                 Log.d("TAG", "COLLAPSING");
             }
         });
-
-        final TextView header_text = (TextView) holder.expandableLayoutItem.getHeaderLayout().findViewById(R.id.header_text);
-        header_text.setText(list.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return items.size();
     }
 
     public static class ViewHolder extends ExpandableLayoutRecyclerView.ViewHolder {
         public ExpandableCardItem expandableLayoutItem;
+        public ImageView imageView;
+        public TextView textView;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            expandableLayoutItem = (ExpandableCardItem) itemView.findViewById(R.id.row);
+        public ViewHolder(View rowView, View headerView, View contentView) {
+            super(rowView, headerView, contentView);
+
+            expandableLayoutItem = (ExpandableCardItem) rowView.findViewById(R.id.row);
+            imageView = (ImageView) ((ExpandableBaseItem) headerView).getHeaderLayout().findViewById(R.id.imageView);
+            textView = (TextView) ((ExpandableBaseItem) headerView).getHeaderLayout().findViewById(R.id.textView);
         }
 
         @Override

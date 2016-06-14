@@ -2,15 +2,21 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="192dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="192dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_test"/>
 
     <TextView
-        android:id="@+id/header_text"
+        android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="ExpandableLayout Header!"
-        android:textColor="@android:color/white"/>
-
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:padding="16dp"
+        android:text="Top 10 Australian beaches"
+        android:textAppearance="?android:textAppearanceLargeInverse"/>
 </FrameLayout>

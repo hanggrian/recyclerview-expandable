@@ -6,23 +6,46 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/text"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="#c0392b"
-            android:gravity="center"
-            android:hint="Hello World !"
-            android:textColor="@android:color/white"/>
-
-        <Button
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text"
-            android:text="click ME !"/>
-    </LinearLayout>
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp"
+            android:text="Number 10"
+            android:textAppearance="?android:textAppearanceSmall"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="Whitehaven Beach\nWhitsunday Island, Whitsunday Islands"
+            android:textAppearance="?android:textAppearanceListItem"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:text="Share"
+                android:textColor="@color/colorAccent"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:text="Explore"
+                android:textColor="@color/colorAccent"/>
+        </LinearLayout>
+    </LinearLayout>
 </FrameLayout>

@@ -1,9 +1,22 @@
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:title="Discover"/>
+    </android.support.design.widget.AppBarLayout>
 
     <io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRecyclerView
         android:id="@+id/recyclerView"
@@ -12,5 +25,4 @@
         android:clipToPadding="false"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"/>
-
-</RelativeLayout>
+</LinearLayout>
