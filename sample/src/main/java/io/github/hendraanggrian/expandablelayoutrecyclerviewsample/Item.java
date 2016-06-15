@@ -8,6 +8,9 @@ public class Item {
     public int drawable;
     public String title;
 
+    public Item() {
+    }
+
     public Item(int drawable, String title) {
         this.drawable = drawable;
         this.title = title;

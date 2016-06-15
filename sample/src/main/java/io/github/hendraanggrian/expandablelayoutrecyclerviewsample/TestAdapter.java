@@ -1,6 +1,7 @@
 package io.github.hendraanggrian.expandablelayoutrecyclerviewsample;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableBaseItem;
@@ -23,16 +25,19 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
     private Context context;
     private List<Item> items;
 
-    public TestAdapter(LinearLayoutManager lm, List<Item> items) {
+    public TestAdapter(LinearLayoutManager lm) {
         super(lm);
-        this.items = items;
+        items = new ArrayList<>();
+        items.add(new Item(R.drawable.ic_test1, "14 Easy Weekend Getaways"));
+        items.add(new Item(R.drawable.ic_test2, "Why We Travel"));
+        items.add(new Item(R.drawable.ic_test3, "A Paris Farewell"));
     }
 
     @Override
     public TestAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View view = LayoutInflater.from(context).inflate(R.layout.view_row, parent, false);
-        return new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(LayoutInflater.from(context).inflate(R.layout.view_row, parent, false));
+        return holder;
     }
 
     @Override
@@ -40,7 +45,8 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
         super.onBindViewHolder(holder, position);
         final Item item = items.get(position);
 
-        //holder.header.
+        holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, item.drawable));
+        holder.textView.setText(item.title);
 
         holder.expandableLayoutItem.setOnExpandListener(new ExpandableBaseItem.OnExpandListener() {
             @Override
@@ -65,12 +71,11 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
         public ImageView imageView;
         public TextView textView;
 
-        public ViewHolder(View rowView, View headerView, View contentView) {
-            super(rowView, headerView, contentView);
-
-            expandableLayoutItem = (ExpandableCardItem) rowView.findViewById(R.id.row);
-            imageView = (ImageView) ((ExpandableBaseItem) headerView).getHeaderLayout().findViewById(R.id.imageView);
-            textView = (TextView) ((ExpandableBaseItem) headerView).getHeaderLayout().findViewById(R.id.textView);
+        public ViewHolder(View itemView) {
+            super(itemView);
+            expandableLayoutItem = (ExpandableCardItem) itemView.findViewById(R.id.row);
+            imageView = (ImageView) ((ExpandableBaseItem) itemView).getHeaderLayout().findViewById(R.id.imageView);
+            textView = (TextView) ((ExpandableBaseItem) itemView).getHeaderLayout().findViewById(R.id.textView);
         }
 
         @Override

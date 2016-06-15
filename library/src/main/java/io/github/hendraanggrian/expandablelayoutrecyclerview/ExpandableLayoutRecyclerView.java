@@ -97,10 +97,8 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
 
     public static abstract class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ViewHolder(View rowView, View headerView, View contentView) {
-            super(rowView);
-            headerView = getItem().getHeaderLayout();
-            contentView = getItem().getHeaderLayout();
+        public ViewHolder(View itemView) {
+            super(itemView);
         }
 
         public abstract ExpandableBaseItem getItem();
