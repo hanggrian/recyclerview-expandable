@@ -5,6 +5,7 @@ RecyclerView implementation of [traex's ExpandableLayout](https://github.com/tra
 
 ![ExpandableLayoutRecyclerView GIF](https://github.com/hendraanggrian/ExpandableLayoutRecyclerView/blob/master/sample.gif)
 
+[Download sample.apk](https://github.com/hendraanggrian/ExpandableLayoutRecyclerView/blob/master/sample.apk?raw=true)
 
 Download
 --------
