@@ -60,28 +60,12 @@ public class ExpandableLayoutItem extends FrameLayout {
         init(context, attrs);
     }
 
-    public ViewGroup getHeaderLayout() {
-        return headerLayout;
-    }
-
-    public ViewGroup getContentLayout() {
-        return contentLayout;
-    }
-
-    public boolean isOpened() {
-        return isOpened;
-    }
-
-    public boolean getCloseByUser() {
-        return closeByUser;
-    }
-
-    public void init(final Context context, AttributeSet attrs) {
+    private void init(final Context context, AttributeSet attrs) {
         final View rootView = View.inflate(context, R.layout.view_expandable, this);
         headerLayout = (ViewGroup) rootView.findViewById(R.id.view_expandable_headerlayout);
-        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableLayout);
-        final int headerID = typedArray.getResourceId(R.styleable.ExpandableLayout_layoutHeader, -1);
-        final int contentID = typedArray.getResourceId(R.styleable.ExpandableLayout_layoutContent, -1);
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableLayoutItem);
+        final int headerID = typedArray.getResourceId(R.styleable.ExpandableLayoutItem_layoutHeader, -1);
+        final int contentID = typedArray.getResourceId(R.styleable.ExpandableLayoutItem_layoutContent, -1);
         contentLayout = (ViewGroup) rootView.findViewById(R.id.view_expandable_contentLayout);
 
         if (headerID == -1 || contentID == -1)
@@ -90,13 +74,13 @@ public class ExpandableLayoutItem extends FrameLayout {
         if (isInEditMode())
             return;
 
-        duration = typedArray.getInt(R.styleable.ExpandableLayout_duration, getContext().getResources().getInteger(android.R.integer.config_shortAnimTime));
+        duration = typedArray.getInt(R.styleable.ExpandableLayoutItem_duration, getContext().getResources().getInteger(android.R.integer.config_shortAnimTime));
         final View headerView = View.inflate(context, headerID, null);
         headerView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         headerLayout.addView(headerView);
         setTag(ExpandableLayoutItem.class.getName());
         final View contentView = View.inflate(context, contentID, null);
-        contentView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        contentView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         contentLayout.addView(contentView);
         contentLayout.setVisibility(GONE);
 
@@ -113,6 +97,22 @@ public class ExpandableLayoutItem extends FrameLayout {
         });
 
         typedArray.recycle();
+    }
+
+    public ViewGroup getHeaderLayout() {
+        return headerLayout;
+    }
+
+    public ViewGroup getContentLayout() {
+        return contentLayout;
+    }
+
+    public boolean isOpened() {
+        return isOpened;
+    }
+
+    public boolean getCloseByUser() {
+        return closeByUser;
     }
 
     public void expand(final View v) {
@@ -214,6 +214,13 @@ public class ExpandableLayoutItem extends FrameLayout {
             }, duration);
         }
         closeByUser = false;
+    }
+
+    public void showOrHide() {
+        if (isOpened())
+            hide();
+        else
+            show();
     }
 
     public void setOnExpandListener(OnExpandListener listener) {

@@ -56,10 +56,20 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
 
     public static abstract class Adapter<VH extends ViewHolder> extends RecyclerView.Adapter<VH> {
         private final LinearLayoutManager layoutManager;
+        private ExpandableMode expandableMode;
         private Integer position = -1;
 
         public Adapter(LinearLayoutManager layoutManager) {
             this.layoutManager = layoutManager;
+            this.expandableMode = ExpandableMode.SINGLE;
+        }
+
+        public void setExpandableMode(ExpandableMode expandableMode) {
+            this.expandableMode = expandableMode;
+        }
+
+        public ExpandableMode getExpandableMode() {
+            return expandableMode;
         }
 
         public LinearLayoutManager getLayoutManager() {
@@ -68,6 +78,7 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
 
         @Override
         public void onBindViewHolder(final VH holder, int position) {
+
             holder.getItem().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -76,7 +87,7 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
             });
         }
 
-        public void performClick(int position) {
+        private void performClick(int position) {
             this.position = position;
 
             for (int index = 0; index < getLayoutManager().getChildCount(); ++index) {
@@ -87,17 +98,24 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
             }
 
             ExpandableLayoutItem expandableLayout = (ExpandableLayoutItem) getLayoutManager().getChildAt(position - getLayoutManager().findFirstVisibleItemPosition()).findViewWithTag(ExpandableLayoutItem.class.getName());
-            if (expandableLayout.isOpened())
-                expandableLayout.hide();
-            else
-                expandableLayout.show();
+            expandableLayout.showOrHide();
         }
     }
 
     public static abstract class ViewHolder extends RecyclerView.ViewHolder {
 
+        private boolean expanded;
+
         public ViewHolder(View itemView) {
             super(itemView);
+        }
+
+        public boolean isExpanded() {
+            return expanded;
+        }
+
+        public void setExpanded(boolean expanded) {
+            this.expanded = expanded;
         }
 
         public abstract ExpandableLayoutItem getItem();

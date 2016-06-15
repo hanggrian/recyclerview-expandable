@@ -21,7 +21,7 @@ Usage
 Create a row of your RecyclerView:
 
 ```xml
-<io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutItem
+<io.github.hendraanggrian.expandablelayoutrecyclerview.Expandable
     android:id="@+id/row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

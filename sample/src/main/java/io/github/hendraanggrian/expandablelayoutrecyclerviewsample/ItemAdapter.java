@@ -32,6 +32,15 @@ public class ItemAdapter extends ExpandableLayoutRecyclerView.Adapter<ItemAdapte
         items.add(new Item(R.drawable.ic_test1, "14 Easy Weekend Getaways"));
         items.add(new Item(R.drawable.ic_test2, "Why We Travel"));
         items.add(new Item(R.drawable.ic_test3, "A Paris Farewell"));
+        items.add(new Item(R.drawable.ic_test1, "14 Easy Weekend Getaways"));
+        items.add(new Item(R.drawable.ic_test2, "Why We Travel"));
+        items.add(new Item(R.drawable.ic_test3, "A Paris Farewell"));
+        items.add(new Item(R.drawable.ic_test1, "14 Easy Weekend Getaways"));
+        items.add(new Item(R.drawable.ic_test2, "Why We Travel"));
+        items.add(new Item(R.drawable.ic_test3, "A Paris Farewell"));
+        items.add(new Item(R.drawable.ic_test1, "14 Easy Weekend Getaways"));
+        items.add(new Item(R.drawable.ic_test2, "Why We Travel"));
+        items.add(new Item(R.drawable.ic_test3, "A Paris Farewell"));
     }
 
     @Override

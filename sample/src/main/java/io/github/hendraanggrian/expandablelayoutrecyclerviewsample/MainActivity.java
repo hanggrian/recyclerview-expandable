@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableMode;
 import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRecyclerView;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         ItemAdapter adapter = new ItemAdapter(new LinearLayoutManager(this));
+        adapter.setExpandableMode(ExpandableMode.SINGLE);
 
         final ExpandableLayoutRecyclerView expandableLayoutRecyclerView = (ExpandableLayoutRecyclerView) findViewById(R.id.recyclerView);
         expandableLayoutRecyclerView.setAdapter(adapter);
