@@ -3,52 +3,44 @@ ExpandableLayoutRecyclerView
 
 RecyclerView implementation of [traex's ExpandableLayout](https://github.com/traex/ExpandableLayout).
 
+![ExpandableLayoutRecyclerView GIF](https://github.com/hendraanggrian/ExpandableLayoutRecyclerView/blob/master/demo.gif)
+
 
 Download
 --------
 
 ```gradle
-compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.0.6'
+compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.1.0'
 ```
 
 
 Usage
 -----
 
-Create a row of your RecyclerView. It can be `ExpandableLayoutItem` which is FrameLayout or `ExpandableCardItem` which is CardView:
+Create a row of your RecyclerView:
 
 ```xml
 <io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutItem
     android:id="@+id/row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#e74c3c"
-    app:el_contentLayout="@layout/view_content"
-    app:el_headerLayout="@layout/view_header"/>
-    
-<io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableCardItem
-    android:id="@+id/row"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:foreground="?android:selectableItemBackground"
-    app:cardBackgroundColor="#e74c3c"
-    app:cardCornerRadius="2dp"
-    app:el_contentLayout="@layout/view_content"
-    app:el_headerLayout="@layout/view_header"/>
+    app:duration="500"
+    app:layoutHeader="@layout/view_content"
+    app:layoutContent="@layout/view_header"/>
 ```
 
 Create your ExpandableLayoutRecyclerView.Adapter:
 
 ```java
-public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapter.ViewHolder> {
+public class MyAdapter extends ExpandableLayoutRecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    public TestAdapter(LinearLayoutManager lm) {
+    public MyAdapter(LinearLayoutManager lm) {
         super(lm);
         ...
     }
 
     @Override
-    public void onBindViewHolder(TestAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(MyAdapter.ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         ...
     }
@@ -56,16 +48,18 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
     ...
 
     public static class ViewHolder extends ExpandableLayoutRecyclerView.ViewHolder {
-        public ExpandableLayoutItem expandableLayoutItem;
+        public ExpandableLayoutItem expandableItem;
+        ...
     
         public ViewHolder(View itemView) {
             super(itemView);
-            expandableLayoutItem = (ExpandableLayoutItem) itemView.findViewById(R.id.row);
+            expandableItem = (ExpandableLayoutItem) itemView.findViewById(R.id.row);
+            ...
         }
     
         @Override
-        public ExpandableBaseItem getExpandableLayoutItem() {
-            return expandableLayoutItem;
+        public ExpandableLayoutItem getExpandableLayoutItem() {
+            return expandableItem;
         }
     }
 }
@@ -77,10 +71,7 @@ Have an ExpandableRecyclerView somewhere in your app:
 <io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRecyclerView
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:paddingBottom="8dp"
-    android:paddingTop="8dp"/>
+    android:layout_height="match_parent"/>
 ```
 
 Then pass LinearLayoutManager to the adapter:

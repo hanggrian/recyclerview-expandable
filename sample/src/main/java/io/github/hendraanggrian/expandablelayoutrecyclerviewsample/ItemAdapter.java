@@ -7,25 +7,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableBaseItem;
-import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableCardItem;
+import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutItem;
 import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRecyclerView;
 
 /**
  * Created by hendraanggrian on 6/13/16.
  */
-public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapter.ViewHolder> {
+public class ItemAdapter extends ExpandableLayoutRecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private Context context;
     private List<Item> items;
 
-    public TestAdapter(LinearLayoutManager lm) {
+    public ItemAdapter(LinearLayoutManager lm) {
         super(lm);
         items = new ArrayList<>();
         items.add(new Item(R.drawable.ic_test1, "14 Easy Weekend Getaways"));
@@ -34,29 +35,34 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
     }
 
     @Override
-    public TestAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        ViewHolder holder = new ViewHolder(LayoutInflater.from(context).inflate(R.layout.view_row, parent, false));
-        return holder;
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.view_row, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(TestAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ItemAdapter.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         final Item item = items.get(position);
 
         holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, item.drawable));
         holder.textView.setText(item.title);
+        holder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        holder.expandableLayoutItem.setOnExpandListener(new ExpandableBaseItem.OnExpandListener() {
+        holder.item.setOnExpandListener(new ExpandableLayoutItem.OnExpandListener() {
             @Override
             public void onExpanding() {
-                Log.d("TAG", "EXPANDING");
+                Log.d("ExpandableLayout", holder.getAdapterPosition() + " Expading");
             }
 
             @Override
             public void onCollapsing() {
-                Log.d("TAG", "COLLAPSING");
+                Log.d("ExpandableLayout", holder.getAdapterPosition() + " Collapsing");
             }
         });
     }
@@ -67,20 +73,22 @@ public class TestAdapter extends ExpandableLayoutRecyclerView.Adapter<TestAdapte
     }
 
     public static class ViewHolder extends ExpandableLayoutRecyclerView.ViewHolder {
-        public ExpandableCardItem expandableLayoutItem;
+        public ExpandableLayoutItem item;
         public ImageView imageView;
         public TextView textView;
+        public Button button;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            expandableLayoutItem = (ExpandableCardItem) itemView.findViewById(R.id.row);
-            imageView = (ImageView) ((ExpandableBaseItem) itemView).getHeaderLayout().findViewById(R.id.imageView);
-            textView = (TextView) ((ExpandableBaseItem) itemView).getHeaderLayout().findViewById(R.id.textView);
+            item = (ExpandableLayoutItem) itemView.findViewById(R.id.row);
+            imageView = (ImageView) item.getHeaderLayout().findViewById(R.id.imageView);
+            textView = (TextView) item.getHeaderLayout().findViewById(R.id.textView);
+            button = (Button) item.getContentLayout().findViewById(R.id.button);
         }
 
         @Override
-        public ExpandableBaseItem getItem() {
-            return expandableLayoutItem;
+        public ExpandableLayoutItem getItem() {
+            return item;
         }
     }
 }

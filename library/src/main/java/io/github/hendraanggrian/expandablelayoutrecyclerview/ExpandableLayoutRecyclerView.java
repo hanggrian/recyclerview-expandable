@@ -67,11 +67,11 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
         }
 
         @Override
-        public void onBindViewHolder(final VH holder, final int position) {
+        public void onBindViewHolder(final VH holder, int position) {
             holder.getItem().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    performClick(position);
+                    performClick(holder.getAdapterPosition());
                 }
             });
         }
@@ -81,13 +81,12 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
 
             for (int index = 0; index < getLayoutManager().getChildCount(); ++index) {
                 if (index != (position - getLayoutManager().findFirstVisibleItemPosition())) {
-                    ExpandableBaseItem currentExpandableLayout = (ExpandableBaseItem) getLayoutManager().getChildAt(index).findViewWithTag(ExpandableBaseItem.class.getName());
+                    ExpandableLayoutItem currentExpandableLayout = (ExpandableLayoutItem) getLayoutManager().getChildAt(index).findViewWithTag(ExpandableLayoutItem.class.getName());
                     currentExpandableLayout.hide();
                 }
             }
 
-            ExpandableBaseItem expandableLayout = (ExpandableBaseItem) getLayoutManager().getChildAt(position - getLayoutManager().findFirstVisibleItemPosition()).findViewWithTag(ExpandableBaseItem.class.getName());
-
+            ExpandableLayoutItem expandableLayout = (ExpandableLayoutItem) getLayoutManager().getChildAt(position - getLayoutManager().findFirstVisibleItemPosition()).findViewWithTag(ExpandableLayoutItem.class.getName());
             if (expandableLayout.isOpened())
                 expandableLayout.hide();
             else
@@ -101,6 +100,6 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
             super(itemView);
         }
 
-        public abstract ExpandableBaseItem getItem();
+        public abstract ExpandableLayoutItem getItem();
     }
 }

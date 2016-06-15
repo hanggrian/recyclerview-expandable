@@ -13,8 +13,10 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="Discover"/>
     </android.support.design.widget.AppBarLayout>
 

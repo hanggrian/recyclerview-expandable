@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<set
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:interpolator/accelerate_decelerate">
 
-<set xmlns:android="http://schemas.android.com/apk/res/android"
-     android:interpolator="@android:interpolator/accelerate_decelerate">
     <translate
+        android:duration="@android:integer/config_shortAnimTime"
         android:fromYDelta="0%"
-        android:toYDelta="-100%"
-        android:duration="@android:integer/config_shortAnimTime" />
+        android:toYDelta="-100%"/>
     <alpha
+        android:duration="@android:integer/config_shortAnimTime"
         android:fromAlpha="1"
-        android:toAlpha="0"
-        android:duration="@android:integer/config_shortAnimTime"/>
+        android:toAlpha="0"/>
 </set>

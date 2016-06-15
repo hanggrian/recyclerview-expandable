@@ -26,7 +26,6 @@ package io.github.hendraanggrian.expandablelayoutrecyclerview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,14 +34,14 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.FrameLayout;
 
-public class ExpandableLayoutItem extends CardView implements ExpandableBaseItem {
+public class ExpandableLayoutItem extends FrameLayout {
 
-    private Boolean isAnimationRunning = false;
-    private Boolean isOpened = false;
-    private Integer duration;
-    private FrameLayout contentLayout;
-    private FrameLayout headerLayout;
-    private Boolean closeByUser = true;
+    private boolean isAnimationRunning = false;
+    private boolean isOpened = false;
+    private int duration;
+    private ViewGroup contentLayout;
+    private ViewGroup headerLayout;
+    private boolean closeByUser = true;
 
     private OnExpandListener listener;
     private boolean collapsingCalled = false;
@@ -61,14 +60,29 @@ public class ExpandableLayoutItem extends CardView implements ExpandableBaseItem
         init(context, attrs);
     }
 
-    @Override
+    public ViewGroup getHeaderLayout() {
+        return headerLayout;
+    }
+
+    public ViewGroup getContentLayout() {
+        return contentLayout;
+    }
+
+    public boolean isOpened() {
+        return isOpened;
+    }
+
+    public boolean getCloseByUser() {
+        return closeByUser;
+    }
+
     public void init(final Context context, AttributeSet attrs) {
         final View rootView = View.inflate(context, R.layout.view_expandable, this);
-        headerLayout = (FrameLayout) rootView.findViewById(R.id.view_expandable_headerlayout);
+        headerLayout = (ViewGroup) rootView.findViewById(R.id.view_expandable_headerlayout);
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableLayout);
-        final int headerID = typedArray.getResourceId(R.styleable.ExpandableLayout_el_headerLayout, -1);
-        final int contentID = typedArray.getResourceId(R.styleable.ExpandableLayout_el_contentLayout, -1);
-        contentLayout = (FrameLayout) rootView.findViewById(R.id.view_expandable_contentLayout);
+        final int headerID = typedArray.getResourceId(R.styleable.ExpandableLayout_layoutHeader, -1);
+        final int contentID = typedArray.getResourceId(R.styleable.ExpandableLayout_layoutContent, -1);
+        contentLayout = (ViewGroup) rootView.findViewById(R.id.view_expandable_contentLayout);
 
         if (headerID == -1 || contentID == -1)
             throw new IllegalArgumentException("HeaderLayout and ContentLayout cannot be null!");
@@ -76,11 +90,11 @@ public class ExpandableLayoutItem extends CardView implements ExpandableBaseItem
         if (isInEditMode())
             return;
 
-        duration = typedArray.getInt(R.styleable.ExpandableLayout_el_duration, getContext().getResources().getInteger(android.R.integer.config_shortAnimTime));
+        duration = typedArray.getInt(R.styleable.ExpandableLayout_duration, getContext().getResources().getInteger(android.R.integer.config_shortAnimTime));
         final View headerView = View.inflate(context, headerID, null);
         headerView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         headerLayout.addView(headerView);
-        setTag(ExpandableBaseItem.class.getName());
+        setTag(ExpandableLayoutItem.class.getName());
         final View contentView = View.inflate(context, contentID, null);
         contentView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contentLayout.addView(contentView);
@@ -98,9 +112,9 @@ public class ExpandableLayoutItem extends CardView implements ExpandableBaseItem
             }
         });
 
+        typedArray.recycle();
     }
 
-    @Override
     public void expand(final View v) {
         isOpened = true;
         v.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -124,7 +138,6 @@ public class ExpandableLayoutItem extends CardView implements ExpandableBaseItem
         v.startAnimation(animation);
     }
 
-    @Override
     public void collapse(final View v) {
         isOpened = false;
         final int initialHeight = v.getMeasuredHeight();
@@ -150,15 +163,6 @@ public class ExpandableLayoutItem extends CardView implements ExpandableBaseItem
         v.startAnimation(animation);
     }
 
-    @Override
-    public void hideNow() {
-        contentLayout.getLayoutParams().height = 0;
-        contentLayout.invalidate();
-        contentLayout.setVisibility(View.GONE);
-        isOpened = false;
-    }
-
-    @Override
     public void showNow() {
         if (!this.isOpened()) {
             contentLayout.setVisibility(VISIBLE);
@@ -168,12 +172,13 @@ public class ExpandableLayoutItem extends CardView implements ExpandableBaseItem
         }
     }
 
-    @Override
-    public Boolean isOpened() {
-        return isOpened;
+    public void hideNow() {
+        contentLayout.getLayoutParams().height = 0;
+        contentLayout.invalidate();
+        contentLayout.setVisibility(View.GONE);
+        isOpened = false;
     }
 
-    @Override
     public void show() {
         if (!isAnimationRunning) {
             if (listener != null) {
@@ -192,17 +197,6 @@ public class ExpandableLayoutItem extends CardView implements ExpandableBaseItem
         }
     }
 
-    @Override
-    public FrameLayout getHeaderLayout() {
-        return headerLayout;
-    }
-
-    @Override
-    public FrameLayout getContentLayout() {
-        return contentLayout;
-    }
-
-    @Override
     public void hide() {
         if (!isAnimationRunning) {
             if (listener != null && !collapsingCalled) {
@@ -222,13 +216,13 @@ public class ExpandableLayoutItem extends CardView implements ExpandableBaseItem
         closeByUser = false;
     }
 
-    @Override
-    public Boolean getCloseByUser() {
-        return closeByUser;
-    }
-
-    @Override
     public void setOnExpandListener(OnExpandListener listener) {
         this.listener = listener;
+    }
+
+    public interface OnExpandListener {
+        void onExpanding();
+
+        void onCollapsing();
     }
 }
