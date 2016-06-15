@@ -56,6 +56,7 @@ public class ItemAdapter extends ExpandableLayoutRecyclerView.Adapter<ItemAdapte
 
         holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, item.drawable));
         holder.textView.setText(item.title);
+        holder.position.setText(String.valueOf(position));
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +86,7 @@ public class ItemAdapter extends ExpandableLayoutRecyclerView.Adapter<ItemAdapte
         public ExpandableLayoutItem item;
         public ImageView imageView;
         public TextView textView;
+        public TextView position;
         public Button button;
 
         public ViewHolder(View itemView) {
@@ -92,6 +94,7 @@ public class ItemAdapter extends ExpandableLayoutRecyclerView.Adapter<ItemAdapte
             item = (ExpandableLayoutItem) itemView.findViewById(R.id.row);
             imageView = (ImageView) item.getHeaderLayout().findViewById(R.id.imageView);
             textView = (TextView) item.getHeaderLayout().findViewById(R.id.textView);
+            position = (TextView) item.getHeaderLayout().findViewById(R.id.position);
             button = (Button) item.getContentLayout().findViewById(R.id.button);
         }
 

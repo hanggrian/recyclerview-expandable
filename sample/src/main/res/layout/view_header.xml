@@ -19,4 +19,12 @@
         android:padding="16dp"
         android:text="Top 10 Australian beaches"
         android:textAppearance="?android:textAppearanceLargeInverse"/>
+
+    <TextView
+        android:id="@+id/position"
+        android:layout_width="?actionBarSize"
+        android:layout_height="?actionBarSize"
+        android:gravity="center"
+        android:text="1"
+        android:textAppearance="?android:textAppearanceLargeInverse"/>
 </FrameLayout>
