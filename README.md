@@ -3,7 +3,7 @@ ExpandableLayoutRecyclerView
 
 RecyclerView implementation of [traex's ExpandableLayout](https://github.com/traex/ExpandableLayout).
 
-![ExpandableLayoutRecyclerView GIF](https://github.com/hendraanggrian/ExpandableLayoutRecyclerView/blob/master/demo.gif)
+![ExpandableLayoutRecyclerView GIF](https://github.com/hendraanggrian/ExpandableLayoutRecyclerView/blob/master/sample.gif)
 
 
 Download
