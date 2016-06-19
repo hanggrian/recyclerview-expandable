@@ -26,6 +26,7 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
 
     public static abstract class Adapter<VH extends ViewHolder> extends RecyclerView.Adapter<VH> {
         private final LinearLayoutManager layoutManager;
+        private int selected = -1;
 
         public Adapter(LinearLayoutManager layoutManager) {
             this.layoutManager = layoutManager;
@@ -37,9 +38,10 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
 
         @Override
         public void onBindViewHolder(final VH holder, int position) {
-            for (int i = 0; i < layoutManager.getChildCount(); i++)
-                if (holder.getItem().isOpened())
-                    holder.getItem().hide();
+            if (selected != holder.getAdapterPosition() && holder.getItem().isOpened())
+                holder.getItem().hideNow();
+            else if (selected == holder.getAdapterPosition() && !holder.getItem().isOpened())
+                holder.getItem().showNow();
 
             holder.getItem().setOnClickListener(new OnClickListener() {
                 @Override
@@ -50,16 +52,16 @@ public class ExpandableLayoutRecyclerView extends RecyclerView {
         }
 
         private void performClick(ViewHolder holder) {
-            int position = holder.getAdapterPosition();
+            selected = holder.getAdapterPosition();
 
             for (int i = 0; i < layoutManager.getChildCount(); ++i) {
-                if (i != (position - layoutManager.findFirstVisibleItemPosition())) {
+                if (i != (selected - layoutManager.findFirstVisibleItemPosition())) {
                     ExpandableLayoutItem currentExpandableLayout = (ExpandableLayoutItem) layoutManager.getChildAt(i).findViewWithTag(ExpandableLayoutItem.class.getName());
                     currentExpandableLayout.hide();
                 }
             }
 
-            ExpandableLayoutItem expandableLayout = (ExpandableLayoutItem) layoutManager.getChildAt(position - layoutManager.findFirstVisibleItemPosition()).findViewWithTag(ExpandableLayoutItem.class.getName());
+            ExpandableLayoutItem expandableLayout = (ExpandableLayoutItem) layoutManager.getChildAt(selected - layoutManager.findFirstVisibleItemPosition()).findViewWithTag(ExpandableLayoutItem.class.getName());
             expandableLayout.showOrHide();
         }
     }

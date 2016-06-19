@@ -67,12 +67,12 @@ public class ItemAdapter extends ExpandableLayoutRecyclerView.Adapter<ItemAdapte
         holder.item.setOnExpandListener(new ExpandableLayoutItem.OnExpandListener() {
             @Override
             public void onExpanding() {
-                Log.d("ExpandableLayout", holder.getAdapterPosition() + " Expading");
+                //Log.d("ExpandableLayout", holder.getAdapterPosition() + " Expading");
             }
 
             @Override
             public void onCollapsing() {
-                Log.d("ExpandableLayout", holder.getAdapterPosition() + " Collapsing");
+                //Log.d("ExpandableLayout", holder.getAdapterPosition() + " Collapsing");
             }
         });
     }
