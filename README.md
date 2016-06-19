@@ -11,7 +11,7 @@ Download
 --------
 
 ```gradle
-compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.1.2'
+compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.1.3'
 ```
 
 
@@ -66,13 +66,14 @@ public class MyAdapter extends ExpandableLayoutRecyclerView.Adapter<MyAdapter.Vi
 }
 ```
 
-Have an ExpandableRecyclerView somewhere in your app:
+Have an ExpandableRecyclerView somewhere in your app. `expandMode` can be `single` or `any`, default is `single`.
 
 ```xml
 <io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRecyclerView
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent"
+    app:expandMode="single"/>
 ```
 
 Then pass LinearLayoutManager to the adapter:
@@ -95,12 +96,12 @@ Detect onExpand and onCollapse:
 expandableLayoutItem.setOnExpandListener(new ExpandableBaseItem.OnExpandListener() {
     @Override
     public void onExpanding() {
-        Log.d("TAG", "EXPANDING");
+        // expanding
     }
 
     @Override
     public void onCollapsing() {
-        Log.d("TAG", "COLLAPSING");
+        // collapsing
     }
 });
 ```

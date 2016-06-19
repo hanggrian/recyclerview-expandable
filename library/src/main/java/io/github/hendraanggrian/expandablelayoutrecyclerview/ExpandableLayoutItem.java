@@ -44,7 +44,7 @@ public class ExpandableLayoutItem extends FrameLayout {
     private boolean closeByUser = true;
 
     private OnExpandListener listener;
-    private boolean collapsingCalled = false;
+    private OnCollapsedByUser onCollapsedByUser;
 
     public ExpandableLayoutItem(Context context) {
         super(context);
@@ -63,10 +63,13 @@ public class ExpandableLayoutItem extends FrameLayout {
     private void init(final Context context, AttributeSet attrs) {
         final View rootView = View.inflate(context, R.layout.view_expandable, this);
         headerLayout = (ViewGroup) rootView.findViewById(R.id.view_expandable_headerlayout);
+        contentLayout = (ViewGroup) rootView.findViewById(R.id.view_expandable_contentLayout);
+
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableLayoutItem);
         final int headerID = typedArray.getResourceId(R.styleable.ExpandableLayoutItem_layoutHeader, -1);
         final int contentID = typedArray.getResourceId(R.styleable.ExpandableLayoutItem_layoutContent, -1);
-        contentLayout = (ViewGroup) rootView.findViewById(R.id.view_expandable_contentLayout);
+        duration = typedArray.getInt(R.styleable.ExpandableLayoutItem_duration, getContext().getResources().getInteger(android.R.integer.config_shortAnimTime));
+        typedArray.recycle();
 
         if (headerID == -1 || contentID == -1)
             throw new IllegalArgumentException("HeaderLayout and ContentLayout cannot be null!");
@@ -74,7 +77,6 @@ public class ExpandableLayoutItem extends FrameLayout {
         if (isInEditMode())
             return;
 
-        duration = typedArray.getInt(R.styleable.ExpandableLayoutItem_duration, getContext().getResources().getInteger(android.R.integer.config_shortAnimTime));
         final View headerView = View.inflate(context, headerID, null);
         headerView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         headerLayout.addView(headerView);
@@ -86,17 +88,18 @@ public class ExpandableLayoutItem extends FrameLayout {
 
         headerLayout.setOnTouchListener(new OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View view, MotionEvent event) {
                 if (isOpened() && event.getAction() == MotionEvent.ACTION_UP) {
                     hide();
                     closeByUser = true;
+
+                    if (onCollapsedByUser != null)
+                        onCollapsedByUser.onCollapsed();
                 }
 
                 return isOpened() && event.getAction() == MotionEvent.ACTION_DOWN;
             }
         });
-
-        typedArray.recycle();
     }
 
     public ViewGroup getHeaderLayout() {
@@ -183,7 +186,7 @@ public class ExpandableLayoutItem extends FrameLayout {
         if (!isAnimationRunning) {
             if (listener != null) {
                 listener.onExpanding();
-                collapsingCalled = false;
+                listener.collapsingCalled = false;
             }
 
             expand(contentLayout);
@@ -199,9 +202,9 @@ public class ExpandableLayoutItem extends FrameLayout {
 
     public void hide() {
         if (!isAnimationRunning) {
-            if (listener != null && !collapsingCalled) {
+            if (listener != null && !listener.collapsingCalled) {
                 listener.onCollapsing();
-                collapsingCalled = true;
+                listener.collapsingCalled = true;
             }
 
             collapse(contentLayout);
@@ -217,19 +220,40 @@ public class ExpandableLayoutItem extends FrameLayout {
     }
 
     public void showOrHide() {
-        if (isOpened())
-            hide();
-        else
-            show();
+        if (isOpened()) hide();
+        else show();
     }
 
     public void setOnExpandListener(OnExpandListener listener) {
         this.listener = listener;
     }
 
-    public interface OnExpandListener {
-        void onExpanding();
+    protected void setOnCollapsedByUser(OnCollapsedByUser onCollapsedByUser) {
+        this.onCollapsedByUser = onCollapsedByUser;
+    }
 
-        void onCollapsing();
+    public static abstract class OnExpandListener {
+        private boolean collapsingCalled = false;
+
+        public abstract void onExpanding();
+
+        public abstract void onCollapsing();
+    }
+
+    public static class SimpleOnExpandListener extends OnExpandListener {
+
+        @Override
+        public void onExpanding() {
+
+        }
+
+        @Override
+        public void onCollapsing() {
+
+        }
+    }
+
+    protected interface OnCollapsedByUser {
+        void onCollapsed();
     }
 }
