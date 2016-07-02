@@ -82,7 +82,7 @@ public class ExpandableLayoutItem extends FrameLayout {
         headerLayout.addView(headerView);
         setTag(ExpandableLayoutItem.class.getName());
         final View contentView = View.inflate(context, contentID, null);
-        contentView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        contentView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contentLayout.addView(contentView);
         contentLayout.setVisibility(GONE);
 
