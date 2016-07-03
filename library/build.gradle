@@ -26,7 +26,7 @@ publish {
     userOrg = 'hendraanggrian'
     groupId = 'io.github.hendraanggrian'
     artifactId = 'expandablelayoutrecyclerview'
-    publishVersion = '0.1.4'
+    publishVersion = '0.1.6'
     desc = 'RecyclerView implementation of traex\'s ExpandableLayout. https://github.com/traex/ExpandableLayout.'
     website = 'https://github.com/hendraanggrian/ExpandableLayoutRecyclerView'
 

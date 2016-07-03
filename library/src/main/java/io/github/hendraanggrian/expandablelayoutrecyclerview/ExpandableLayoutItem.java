@@ -1,18 +1,18 @@
 /***********************************************************************************
  * The MIT License (MIT)
- * <p/>
+ * <p>
  * Copyright (c) 2014 Robin Chutaux
- * <p/>
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * <p/>
+ * <p>
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * <p/>
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -168,6 +168,8 @@ public class ExpandableLayoutItem extends FrameLayout {
 
     public void showNow() {
         if (!this.isOpened()) {
+            expandListener();
+
             contentLayout.setVisibility(VISIBLE);
             this.isOpened = true;
             contentLayout.getLayoutParams().height = LayoutParams.WRAP_CONTENT;
@@ -176,6 +178,8 @@ public class ExpandableLayoutItem extends FrameLayout {
     }
 
     public void hideNow() {
+        collapseListener();
+
         contentLayout.getLayoutParams().height = 0;
         contentLayout.invalidate();
         contentLayout.setVisibility(View.GONE);
@@ -184,10 +188,7 @@ public class ExpandableLayoutItem extends FrameLayout {
 
     public void show() {
         if (!isAnimationRunning) {
-            if (listener != null) {
-                listener.onExpanding();
-                listener.collapsingCalled = false;
-            }
+            expandListener();
 
             expand(contentLayout);
             isAnimationRunning = true;
@@ -202,10 +203,7 @@ public class ExpandableLayoutItem extends FrameLayout {
 
     public void hide() {
         if (!isAnimationRunning) {
-            if (listener != null && !listener.collapsingCalled) {
-                listener.onCollapsing();
-                listener.collapsingCalled = true;
-            }
+            collapseListener();
 
             collapse(contentLayout);
             isAnimationRunning = true;
@@ -222,6 +220,20 @@ public class ExpandableLayoutItem extends FrameLayout {
     public void showOrHide() {
         if (isOpened()) hide();
         else show();
+    }
+
+    private void expandListener() {
+        if (listener != null) {
+            listener.onExpanding();
+            listener.collapsingCalled = false;
+        }
+    }
+
+    private void collapseListener() {
+        if (listener != null && !listener.collapsingCalled) {
+            listener.onCollapsing();
+            listener.collapsingCalled = true;
+        }
     }
 
     public void setOnExpandListener(OnExpandListener listener) {

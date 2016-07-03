@@ -11,7 +11,7 @@ Download
 --------
 
 ```gradle
-compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.1.3'
+compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.1.6'
 ```
 
 
