@@ -1,14 +1,52 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.3.0'
         classpath 'com.novoda:bintray-release:0.3.4'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext.android = [
+        sdk       : [
+                'min'   : 9,
+                'target': 25
+        ],
+        buildTools: '25.0.2',
+        testRunner: 'android.support.test.runner.AndroidJUnitRunner'
+]
+
+ext.deps = [
+        test       : [
+                'junit:junit:4.12'
+        ],
+        androidTest: [
+                'com.android.support.test:runner:0.5',
+                'com.android.support.test.espresso:espresso-core:2.2.2'
+        ],
+        main       : [
+                'com.android.support:recyclerview-v7:25.3.0'
+        ]
+]
+
+ext.bintray = [
+        user    : 'hendraanggrian',
+        group   : 'io.github.hendraanggrian',
+        artifact: 'picasso-extensions',
+        version : '0.7.0',
+        desc    : 'Image manipulation with pre-loaded transformations and target placeholder.',
+        website : 'https://github.com/hendraanggrian/picasso-extensions'
+]
+
+//$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false

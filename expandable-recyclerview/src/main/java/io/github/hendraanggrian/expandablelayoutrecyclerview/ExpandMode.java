@@ -1,7 +1,7 @@
 package io.github.hendraanggrian.expandablelayoutrecyclerview;
 
 /**
- * Created by hendraanggrian on 20/06/16.
+ * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
 public enum ExpandMode {
     SINGLE(0), ANY(1);
