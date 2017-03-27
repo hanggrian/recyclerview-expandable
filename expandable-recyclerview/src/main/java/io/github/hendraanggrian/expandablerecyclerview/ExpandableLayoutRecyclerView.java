@@ -1,4 +1,4 @@
-package io.github.hendraanggrian.expandablelayoutrecyclerview;
+package io.github.hendraanggrian.expandablerecyclerview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,6 +10,8 @@ import android.view.View;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import io.github.hendraanggrian.expandablelayoutrecyclerview.R;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)

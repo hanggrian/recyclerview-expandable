@@ -1,4 +1,4 @@
-package io.github.hendraanggrian.expandablelayoutrecyclerviewsample;
+package io.github.hendraanggrian.expandablerecyclerviewdemo;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -15,8 +15,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutItem;
-import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRecyclerView;
+import io.github.hendraanggrian.expandablerecyclerview.ExpandableLayoutItem;
+import io.github.hendraanggrian.expandablerecyclerview.ExpandableLayoutRecyclerView;
 
 /**
  * Created by hendraanggrian on 6/13/16.

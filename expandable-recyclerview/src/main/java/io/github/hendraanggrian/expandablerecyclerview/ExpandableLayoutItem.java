@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ***********************************************************************************/
-package io.github.hendraanggrian.expandablelayoutrecyclerview;
+package io.github.hendraanggrian.expandablerecyclerview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -33,6 +33,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.FrameLayout;
+
+import io.github.hendraanggrian.expandablelayoutrecyclerview.R;
 
 public class ExpandableLayoutItem extends FrameLayout {
 

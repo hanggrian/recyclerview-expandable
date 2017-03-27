@@ -1,4 +1,4 @@
-package io.github.hendraanggrian.expandablelayoutrecyclerview;
+package io.github.hendraanggrian.expandablerecyclerview;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)

@@ -1,4 +1,4 @@
-package io.github.hendraanggrian.expandablelayoutrecyclerviewsample;
+package io.github.hendraanggrian.expandablerecyclerviewdemo;
 
 import android.content.Intent;
 import android.os.Bundle;

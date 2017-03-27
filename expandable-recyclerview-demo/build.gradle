@@ -4,6 +4,7 @@ android {
     compileSdkVersion rootProject.android.sdk.target
     buildToolsVersion rootProject.android.buildTools
     defaultConfig {
+        applicationId 'io.github.hendraanggrian.expandablerecyclerviewdemo'
         minSdkVersion rootProject.android.sdk.min
         targetSdkVersion rootProject.android.sdk.target
         versionCode 1

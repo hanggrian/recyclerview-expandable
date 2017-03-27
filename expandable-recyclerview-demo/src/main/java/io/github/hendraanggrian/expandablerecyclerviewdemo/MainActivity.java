@@ -1,4 +1,4 @@
-package io.github.hendraanggrian.expandablelayoutrecyclerviewsample;
+package io.github.hendraanggrian.expandablerecyclerviewdemo;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRecyclerView;
+import io.github.hendraanggrian.expandablerecyclerview.ExpandableLayoutRecyclerView;
 
 public class MainActivity extends AppCompatActivity {
 

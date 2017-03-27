@@ -1,4 +1,4 @@
-package io.github.hendraanggrian.expandablelayoutrecyclerviewsample;
+package io.github.hendraanggrian.expandablerecyclerviewdemo;
 
 /**
  * Created by hendraanggrian on 14/06/16.
