@@ -1,18 +1,14 @@
 /***********************************************************************************
  * The MIT License (MIT)
- * <p>
  * Copyright (c) 2014 Robin Chutaux
- * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * <p>
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +17,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  ***********************************************************************************/
-package io.github.hendraanggrian.expandablerecyclerview;
+
+package io.github.hendraanggrian.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -33,44 +30,41 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
-import io.github.hendraanggrian.expandablelayoutrecyclerview.R;
+public class ExpandableItem extends RelativeLayout {
 
-public class ExpandableLayoutItem extends FrameLayout {
+    static final String TAG = "io.github.hendraanggrian.widget.ExpandableItem";
 
-    private boolean isAnimationRunning = false;
-    private boolean isOpened = false;
-    private int duration;
-    private ViewGroup contentLayout;
-    private ViewGroup headerLayout;
-    private boolean closeByUser = true;
+    private Boolean isAnimationRunning = false;
+    private Boolean isOpened = false;
+    private Integer duration;
+    private FrameLayout contentLayout;
+    private FrameLayout headerLayout;
+    private Boolean closeByUser = true;
 
-    private OnExpandListener listener;
-    private OnCollapsedByUser onCollapsedByUser;
-
-    public ExpandableLayoutItem(Context context) {
+    public ExpandableItem(Context context) {
         super(context);
     }
 
-    public ExpandableLayoutItem(Context context, AttributeSet attrs) {
+    public ExpandableItem(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public ExpandableLayoutItem(Context context, AttributeSet attrs, int defStyle) {
+    public ExpandableItem(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
 
     private void init(final Context context, AttributeSet attrs) {
         final View rootView = View.inflate(context, R.layout.view_expandable, this);
-        headerLayout = (ViewGroup) rootView.findViewById(R.id.view_expandable_headerlayout);
-        contentLayout = (ViewGroup) rootView.findViewById(R.id.view_expandable_contentLayout);
-
-        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableLayoutItem);
-        final int headerID = typedArray.getResourceId(R.styleable.ExpandableLayoutItem_layoutHeader, -1);
-        final int contentID = typedArray.getResourceId(R.styleable.ExpandableLayoutItem_layoutContent, -1);
-        duration = typedArray.getInt(R.styleable.ExpandableLayoutItem_duration, getContext().getResources().getInteger(android.R.integer.config_shortAnimTime));
+        headerLayout = (FrameLayout) rootView.findViewById(R.id.view_expandable_header);
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableItem);
+        final int headerID = typedArray.getResourceId(R.styleable.ExpandableItem_layoutHeader, -1);
+        final int contentID = typedArray.getResourceId(R.styleable.ExpandableItem_layoutContent, -1);
+        contentLayout = (FrameLayout) rootView.findViewById(R.id.view_expandable_content);
+        duration = typedArray.getInt(R.styleable.ExpandableItem_duration, getContext().getResources().getInteger(android.R.integer.config_shortAnimTime));
         typedArray.recycle();
 
         if (headerID == -1 || contentID == -1)
@@ -82,21 +76,18 @@ public class ExpandableLayoutItem extends FrameLayout {
         final View headerView = View.inflate(context, headerID, null);
         headerView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         headerLayout.addView(headerView);
-        setTag(ExpandableLayoutItem.class.getName());
+        setTag(TAG);
         final View contentView = View.inflate(context, contentID, null);
-        contentView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        contentView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         contentLayout.addView(contentView);
         contentLayout.setVisibility(GONE);
 
         headerLayout.setOnTouchListener(new OnTouchListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent event) {
+            public boolean onTouch(View v, MotionEvent event) {
                 if (isOpened() && event.getAction() == MotionEvent.ACTION_UP) {
                     hide();
                     closeByUser = true;
-
-                    if (onCollapsedByUser != null)
-                        onCollapsedByUser.onCollapsed();
                 }
 
                 return isOpened() && event.getAction() == MotionEvent.ACTION_DOWN;
@@ -104,23 +95,7 @@ public class ExpandableLayoutItem extends FrameLayout {
         });
     }
 
-    public ViewGroup getHeaderLayout() {
-        return headerLayout;
-    }
-
-    public ViewGroup getContentLayout() {
-        return contentLayout;
-    }
-
-    public boolean isOpened() {
-        return isOpened;
-    }
-
-    public boolean getCloseByUser() {
-        return closeByUser;
-    }
-
-    public void expand(final View v) {
+    private void expand(final View v) {
         isOpened = true;
         v.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         final int targetHeight = v.getMeasuredHeight();
@@ -143,7 +118,7 @@ public class ExpandableLayoutItem extends FrameLayout {
         v.startAnimation(animation);
     }
 
-    public void collapse(final View v) {
+    private void collapse(final View v) {
         isOpened = false;
         final int initialHeight = v.getMeasuredHeight();
         Animation animation = new Animation() {
@@ -168,30 +143,28 @@ public class ExpandableLayoutItem extends FrameLayout {
         v.startAnimation(animation);
     }
 
-    public void showNow() {
-        if (!this.isOpened()) {
-            expandListener();
-
-            contentLayout.setVisibility(VISIBLE);
-            this.isOpened = true;
-            contentLayout.getLayoutParams().height = LayoutParams.WRAP_CONTENT;
-            contentLayout.invalidate();
-        }
-    }
-
     public void hideNow() {
-        collapseListener();
-
         contentLayout.getLayoutParams().height = 0;
         contentLayout.invalidate();
         contentLayout.setVisibility(View.GONE);
         isOpened = false;
     }
 
+    public void showNow() {
+        if (!isOpened) {
+            contentLayout.setVisibility(VISIBLE);
+            isOpened = true;
+            contentLayout.getLayoutParams().height = LayoutParams.WRAP_CONTENT;
+            contentLayout.invalidate();
+        }
+    }
+
+    public boolean isOpened() {
+        return isOpened;
+    }
+
     public void show() {
         if (!isAnimationRunning) {
-            expandListener();
-
             expand(contentLayout);
             isAnimationRunning = true;
             new Handler().postDelayed(new Runnable() {
@@ -203,10 +176,16 @@ public class ExpandableLayoutItem extends FrameLayout {
         }
     }
 
+    public FrameLayout getHeaderLayout() {
+        return headerLayout;
+    }
+
+    public FrameLayout getContentLayout() {
+        return contentLayout;
+    }
+
     public void hide() {
         if (!isAnimationRunning) {
-            collapseListener();
-
             collapse(contentLayout);
             isAnimationRunning = true;
             new Handler().postDelayed(new Runnable() {
@@ -219,55 +198,7 @@ public class ExpandableLayoutItem extends FrameLayout {
         closeByUser = false;
     }
 
-    public void showOrHide() {
-        if (isOpened()) hide();
-        else show();
-    }
-
-    private void expandListener() {
-        if (listener != null) {
-            listener.onExpanding();
-            listener.collapsingCalled = false;
-        }
-    }
-
-    private void collapseListener() {
-        if (listener != null && !listener.collapsingCalled) {
-            listener.onCollapsing();
-            listener.collapsingCalled = true;
-        }
-    }
-
-    public void setOnExpandListener(OnExpandListener listener) {
-        this.listener = listener;
-    }
-
-    protected void setOnCollapsedByUser(OnCollapsedByUser onCollapsedByUser) {
-        this.onCollapsedByUser = onCollapsedByUser;
-    }
-
-    public static abstract class OnExpandListener {
-        private boolean collapsingCalled = false;
-
-        public abstract void onExpanding();
-
-        public abstract void onCollapsing();
-    }
-
-    public static class SimpleOnExpandListener extends OnExpandListener {
-
-        @Override
-        public void onExpanding() {
-
-        }
-
-        @Override
-        public void onCollapsing() {
-
-        }
-    }
-
-    protected interface OnCollapsedByUser {
-        void onCollapsed();
+    public boolean isClosedByUser() {
+        return closeByUser;
     }
 }

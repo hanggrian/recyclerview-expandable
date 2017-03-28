@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="ExpandableLayoutItem">
+    <declare-styleable name="ExpandableItem">
         <attr name="duration" format="integer"/>
         <attr name="layoutHeader" format="reference"/>
         <attr name="layoutContent" format="reference"/>
-    </declare-styleable>
-
-    <declare-styleable name="ExpandableLayoutRecyclerView">
-        <attr name="expandMode" format="enum">
-            <enum name="single" value="0"/>
-            <enum name="any" value="1"/>
-        </attr>
     </declare-styleable>
 </resources>

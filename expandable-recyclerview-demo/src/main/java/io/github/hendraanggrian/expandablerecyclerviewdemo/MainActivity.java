@@ -9,21 +9,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import io.github.hendraanggrian.expandablerecyclerview.ExpandableLayoutRecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.github.hendraanggrian.widget.ExpandableRecyclerView;
 
 public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar_main) Toolbar toolbar;
+    @BindView(R.id.recyclerview_main) ExpandableRecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
 
-        ItemAdapter adapter = new ItemAdapter(new LinearLayoutManager(this));
-
-        final ExpandableLayoutRecyclerView expandableLayoutRecyclerView = (ExpandableLayoutRecyclerView) findViewById(R.id.recyclerView);
-        expandableLayoutRecyclerView.setAdapter(adapter);
-        expandableLayoutRecyclerView.setLayoutManager(adapter.getLayoutManager());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(new ItemAdapter(this, layoutManager));
     }
 
     @Override
