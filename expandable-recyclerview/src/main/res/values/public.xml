@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- attr -->
+    <public name="duration" type="attr"/>
+    <public name="layoutHeader" type="attr"/>
+    <public name="layoutContent" type="attr"/>
+</resources>

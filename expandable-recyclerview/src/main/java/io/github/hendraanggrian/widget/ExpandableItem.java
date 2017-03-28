@@ -44,26 +44,21 @@ public class ExpandableItem extends RelativeLayout {
     private Boolean closeByUser = true;
 
     public ExpandableItem(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public ExpandableItem(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
+        this(context, attrs, 0);
     }
 
     public ExpandableItem(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(context, attrs);
-    }
-
-    private void init(final Context context, AttributeSet attrs) {
         final View rootView = View.inflate(context, R.layout.view_expandable, this);
         headerLayout = (FrameLayout) rootView.findViewById(R.id.view_expandable_header);
+        contentLayout = (FrameLayout) rootView.findViewById(R.id.view_expandable_content);
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableItem);
         final int headerID = typedArray.getResourceId(R.styleable.ExpandableItem_layoutHeader, -1);
         final int contentID = typedArray.getResourceId(R.styleable.ExpandableItem_layoutContent, -1);
-        contentLayout = (FrameLayout) rootView.findViewById(R.id.view_expandable_content);
         duration = typedArray.getInt(R.styleable.ExpandableItem_duration, getContext().getResources().getInteger(android.R.integer.config_shortAnimTime));
         typedArray.recycle();
 

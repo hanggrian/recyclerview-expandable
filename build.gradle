@@ -43,10 +43,10 @@ ext.deps = [
 ext.bintray = [
         user    : 'hendraanggrian',
         group   : 'io.github.hendraanggrian',
-        artifact: 'picasso-extensions',
-        version : '0.7.0',
-        desc    : 'Image manipulation with pre-loaded transformations and target placeholder.',
-        website : 'https://github.com/hendraanggrian/picasso-extensions'
+        artifact: 'expandable-recyclerview',
+        version : '0.2.0',
+        desc    : 'RecyclerView implementation of traex\'s ExpandableLayout.',
+        website : 'https://github.com/hendraanggrian/expandable-recyclerview'
 ]
 
 //$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false

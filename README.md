@@ -1,27 +1,23 @@
-ExpandableLayoutRecyclerView
-============================
-
+![logo](/art/logo.png) Expandable RecyclerView
+==============================================
 RecyclerView implementation of [traex's ExpandableLayout](https://github.com/traex/ExpandableLayout).
 
-![ExpandableLayoutRecyclerView GIF](https://github.com/hendraanggrian/ExpandableLayoutRecyclerView/blob/master/sample.gif)
-
-[Download sample.apk](https://github.com/hendraanggrian/ExpandableLayoutRecyclerView/blob/master/sample.apk?raw=true)
+![demo](/art/demo.gif)
 
 Download
 --------
+Library are hosted in [jCenter](https://bintray.com/hendraanggrian/maven/expandable-recyclerview).
 
 ```gradle
-compile 'io.github.hendraanggrian:expandablelayoutrecyclerview:0.1.6'
+compile 'io.github.hendraanggrian:expandable-recyclerview:0.2.0'
 ```
-
 
 Usage
 -----
-
 Create a row of your RecyclerView:
 
 ```xml
-<io.github.hendraanggrian.expandablelayoutrecyclerview.Expandable
+<io.github.hendraanggrian.widget.ExpandableItem
     android:id="@+id/row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -30,10 +26,10 @@ Create a row of your RecyclerView:
     app:layoutContent="@layout/view_header"/>
 ```
 
-Create your ExpandableLayoutRecyclerView.Adapter:
+Create your ExpandableRecyclerView.Adapter:
 
 ```java
-public class MyAdapter extends ExpandableLayoutRecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class MyAdapter extends ExpandableRecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     public MyAdapter(LinearLayoutManager lm) {
         super(lm);
@@ -42,92 +38,44 @@ public class MyAdapter extends ExpandableLayoutRecyclerView.Adapter<MyAdapter.Vi
 
     @Override
     public void onBindViewHolder(MyAdapter.ViewHolder holder, final int position) {
-        super.onBindViewHolder(holder, position);
+        super.onBindViewHolder(holder, position); // make sure to call this line
         ...
     }
-    
-    ...
 
-    public static class ViewHolder extends ExpandableLayoutRecyclerView.ViewHolder {
-        public ExpandableLayoutItem expandableItem;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ...
-    
-        public ViewHolder(View itemView) {
-            super(itemView);
-            expandableItem = (ExpandableLayoutItem) itemView.findViewById(R.id.row);
-            ...
-        }
-    
-        @Override
-        public ExpandableLayoutItem getExpandableLayoutItem() {
-            return expandableItem;
-        }
     }
 }
 ```
 
-Have an ExpandableRecyclerView somewhere in your app. `expandMode` can be `single` or `any`, default is `single`.
+Have an ExpandableRecyclerView somewhere in your app.
 
 ```xml
-<io.github.hendraanggrian.expandablelayoutrecyclerview.ExpandableLayoutRecyclerView
+<io.github.hendraanggrian.widget.ExpandableRecyclerView
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:expandMode="single"/>
+    android:layout_height="match_parent"/>
 ```
 
 Then pass LinearLayoutManager to the adapter:
 
 ```java
-TestAdapter adapter = new TestAdapter(new LinearLayoutManager(this));
+LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+TestAdapter adapter = new TestAdapter(layoutManager);
 
-ExpandableLayoutRecyclerView elRecyclerView = (ExpandableLayoutRecyclerView) findViewById(R.id.recyclerView);
-elRecyclerView.setAdapter(adapter);
-elRecyclerView.setLayoutManager(adapter.getLayoutManager());
+ExpandableLayoutRecyclerView expandableRecyclerView = (ExpandableLayoutRecyclerView) findViewById(R.id.recyclerView);
+expandableRecyclerView.setLayoutManager(layoutManager);
+expandableRecyclerView.setAdapter(adapter);
 ```
 
-
-Optional
---------
-
-Detect onExpand and onCollapse:
+Using stock `RecyclerView`?
 
 ```java
-expandableLayoutItem.setOnExpandListener(new ExpandableBaseItem.OnExpandListener() {
-    @Override
-    public void onExpanding() {
-        // expanding
-    }
+LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+TestAdapter adapter = new TestAdapter(layoutManager);
 
-    @Override
-    public void onCollapsing() {
-        // collapsing
-    }
-});
+RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+recyclerView.addOnScrollListener(new ExpandableRecyclerView.OnExpandableScrollListener());
+recyclerView.setLayoutManager(layoutManager);
+recyclerView.setAdapter(adapter);
 ```
-
-
-License
---------
-
-    The MIT License (MIT)
-
-    Copyright (c) 2015 Hendra Anggrianto Wijaya
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.

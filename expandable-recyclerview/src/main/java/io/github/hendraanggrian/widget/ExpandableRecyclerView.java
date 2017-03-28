@@ -1,6 +1,7 @@
 package io.github.hendraanggrian.widget;
 
 import android.content.Context;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -76,10 +77,10 @@ public class ExpandableRecyclerView extends RecyclerView {
         }
 
         @Override
+        @CallSuper
         public void onBindViewHolder(VH holder, int position) {
-            holder.itemView.setOnClickListener(getOnExpandableClickListener(holder.getLayoutPosition()));
-
             ExpandableItem expandableItem = (ExpandableItem) holder.itemView.findViewWithTag(ExpandableItem.TAG);
+            expandableItem.setOnClickListener(getOnExpandableClickListener(holder.getLayoutPosition()));
             if (currentPosition != position && expandableItem.isOpened())
                 expandableItem.hideNow();
             else if (currentPosition == position && !expandableItem.isOpened())
@@ -87,7 +88,7 @@ public class ExpandableRecyclerView extends RecyclerView {
         }
 
         @NonNull
-        public OnClickListener getOnExpandableClickListener(final int position) {
+        protected OnClickListener getOnExpandableClickListener(final int position) {
             return new OnClickListener() {
                 @Override
                 public void onClick(View v) {
