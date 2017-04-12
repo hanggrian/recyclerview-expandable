@@ -1,2 +1,2 @@
-include ':expandable-recyclerview'
-include ':expandable-recyclerview-demo'
+include ':recyclerview-expandable'
+include ':example'

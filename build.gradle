@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.android.tools.build:gradle:2.3.1'
         classpath 'com.novoda:bintray-release:0.3.4'
     }
 }
@@ -36,17 +36,17 @@ ext.deps = [
                 'com.android.support.test.espresso:espresso-core:2.2.2'
         ],
         main       : [
-                'com.android.support:recyclerview-v7:25.3.0'
+                'com.android.support:recyclerview-v7:25.3.1'
         ]
 ]
 
 ext.bintray = [
         user    : 'hendraanggrian',
-        group   : 'io.github.hendraanggrian',
-        artifact: 'expandable-recyclerview',
-        version : '0.2.0',
+        group   : 'com.hendraanggrian',
+        artifact: 'recyclerview-expandable',
+        version : '0.3.0',
         desc    : 'RecyclerView implementation of traex\'s ExpandableLayout.',
-        website : 'https://github.com/hendraanggrian/expandable-recyclerview'
+        website : 'https://github.com/hendraanggrian/recyclerview-expandable'
 ]
 
 //$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false

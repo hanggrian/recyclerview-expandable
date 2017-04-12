@@ -9,7 +9,9 @@ Download
 Library are hosted in [jCenter](https://bintray.com/hendraanggrian/maven/expandable-recyclerview).
 
 ```gradle
-compile 'io.github.hendraanggrian:expandable-recyclerview:0.2.0'
+dependencies {
+    compile 'com.hendraanggrian:recyclerview-expandable:0.3.0'
+}
 ```
 
 Usage
@@ -17,7 +19,7 @@ Usage
 Create a row of your RecyclerView:
 
 ```xml
-<io.github.hendraanggrian.widget.ExpandableItem
+<com.hendraanggrian.widget.ExpandableItem
     android:id="@+id/row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -51,7 +53,7 @@ public class MyAdapter extends ExpandableRecyclerView.Adapter<MyAdapter.ViewHold
 Have an ExpandableRecyclerView somewhere in your app.
 
 ```xml
-<io.github.hendraanggrian.widget.ExpandableRecyclerView
+<com.hendraanggrian.widget.ExpandableRecyclerView
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>

@@ -1,0 +1,4 @@
+<lint>
+    <!-- no idea what the hell is this -->
+    <issue id="ClickableViewAccessibility" severity="ignore" />
+</lint>
