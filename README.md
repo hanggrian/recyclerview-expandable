@@ -1,5 +1,5 @@
-![logo](/art/logo.png) Expandable RecyclerView
-==============================================
+ExpandableRecyclerView
+======================
 RecyclerView implementation of [traex's ExpandableLayout](https://github.com/traex/ExpandableLayout).
 
 ![demo](/art/demo.gif)
@@ -10,7 +10,7 @@ Library are hosted in [jCenter](https://bintray.com/hendraanggrian/maven/expanda
 
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:recyclerview-expandable:0.3.0'
+    compile 'com.hendraanggrian:recyclerview-expandable:0.3.1'
 }
 ```
 

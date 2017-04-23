@@ -33,9 +33,9 @@ import android.view.animation.Transformation;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.hendraanggrian.widget.recyclerview.expandable.CollapseAnimation;
-import com.hendraanggrian.widget.recyclerview.expandable.ExpandAnimation;
-import com.hendraanggrian.widget.recyclerview.expandable.R;
+import com.hendraanggrian.recyclerview.expandable.CollapseAnimation;
+import com.hendraanggrian.recyclerview.expandable.ExpandAnimation;
+import com.hendraanggrian.recyclerview.expandable.R;
 
 public class ExpandableItem extends RelativeLayout {
 

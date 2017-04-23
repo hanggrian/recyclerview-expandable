@@ -18,7 +18,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-ext.android = [
+ext.config = [
         sdk       : [
                 'min'   : 9,
                 'target': 25
@@ -27,24 +27,26 @@ ext.android = [
         testRunner: 'android.support.test.runner.AndroidJUnitRunner'
 ]
 
+def versionJunit = '4.12'
+def versionTestRunner = '0.5'
+def versionTestEspresso = '2.2.2'
+def versionSupport = '25.3.1'
+
 ext.deps = [
-        test       : [
-                'junit:junit:4.12'
-        ],
-        androidTest: [
-                'com.android.support.test:runner:0.5',
-                'com.android.support.test.espresso:espresso-core:2.2.2'
-        ],
-        main       : [
-                'com.android.support:recyclerview-v7:25.3.1'
-        ]
+        // test
+        junit              : "junit:junit:$versionJunit",
+        // android test
+        testRunner         : "com.android.support.test:runner:$versionTestRunner",
+        testEspresso       : "com.android.support.test.espresso:espresso-core:$versionTestEspresso",
+        // android
+        supportRecyclerview: "com.android.support:recyclerview-v7:$versionSupport"
 ]
 
 ext.bintray = [
         user    : 'hendraanggrian',
         group   : 'com.hendraanggrian',
         artifact: 'recyclerview-expandable',
-        version : '0.3.0',
+        version : '0.3.1',
         desc    : 'RecyclerView implementation of traex\'s ExpandableLayout.',
         website : 'https://github.com/hendraanggrian/recyclerview-expandable'
 ]

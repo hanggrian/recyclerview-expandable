@@ -13,11 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hendraanggrian.widget.ExpandableRecyclerView;
 import com.hendraanggrian.widget.ExpandableItem;
+import com.hendraanggrian.widget.ExpandableRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.ButterKnife;
 
 /**
  * Created by hendraanggrian on 6/13/16.
@@ -54,17 +56,14 @@ public class ItemAdapter extends ExpandableRecyclerView.Adapter<ItemAdapter.View
     public void onBindViewHolder(final ItemAdapter.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         final Item item = items.get(position);
-
         holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, item.drawable));
         holder.textView.setText(item.title);
-        holder.position.setText(String.valueOf(position));
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show();
             }
         });
-
         /*holder.item.setOnExpandListener(new ExpandableLayoutDep.OnExpandListener() {
             @Override
             public void onExpanding() {
@@ -87,16 +86,14 @@ public class ItemAdapter extends ExpandableRecyclerView.Adapter<ItemAdapter.View
         public ExpandableItem item;
         public ImageView imageView;
         public TextView textView;
-        public TextView position;
         public Button button;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            item = (ExpandableItem) itemView.findViewById(R.id.row);
-            imageView = (ImageView) item.getHeaderLayout().findViewById(R.id.imageView);
-            textView = (TextView) item.getHeaderLayout().findViewById(R.id.textView);
-            position = (TextView) item.getHeaderLayout().findViewById(R.id.position);
-            button = (Button) item.getContentLayout().findViewById(R.id.button);
+            item = ButterKnife.findById(itemView, R.id.row);
+            imageView = ButterKnife.findById(item.getHeaderLayout(), R.id.imageView);
+            textView = ButterKnife.findById(item.getHeaderLayout(), R.id.textView);
+            button = ButterKnife.findById(item.getContentLayout(), R.id.button);
         }
     }
 }

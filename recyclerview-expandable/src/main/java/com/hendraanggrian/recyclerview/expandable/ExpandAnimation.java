@@ -1,4 +1,4 @@
-package com.hendraanggrian.widget.recyclerview.expandable;
+package com.hendraanggrian.recyclerview.expandable;
 
 import android.support.annotation.NonNull;
 import android.view.View;

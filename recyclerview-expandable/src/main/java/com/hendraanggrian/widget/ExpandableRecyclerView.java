@@ -26,17 +26,17 @@ public class ExpandableRecyclerView extends RecyclerView {
         super(context, attrs, defStyle);
         if (isInEditMode())
             return;
-        addOnScrollListener(new OnExpandableScrollListener());
+        addOnScrollListener(new OnScrollListener());
     }
 
     @Override
-    public void addOnScrollListener(OnScrollListener listener) {
-        if (!(listener instanceof OnExpandableScrollListener))
-            throw new IllegalArgumentException("OnScrollListener must be an OnExpandableScrollListener!");
+    public void addOnScrollListener(RecyclerView.OnScrollListener listener) {
+        if (!(listener instanceof OnScrollListener))
+            throw new IllegalArgumentException("OnScrollListener must be an ExpandableRecyclerView.OnScrollListener!");
         super.addOnScrollListener(listener);
     }
 
-    public static class OnExpandableScrollListener extends OnScrollListener {
+    public static class OnScrollListener extends RecyclerView.OnScrollListener {
         private int currentState = 0;
 
         @Override
@@ -48,13 +48,12 @@ public class ExpandableRecyclerView extends RecyclerView {
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             if (recyclerView.getAdapter() != null || recyclerView.getLayoutManager() != null)
                 return;
-            if (!(recyclerView.getAdapter() instanceof ExpandableRecyclerView.Adapter))
+            if (!(recyclerView.getAdapter() instanceof Adapter))
                 throw new RuntimeException("Adapter must be an ExpandableRecyclerView.Adapter");
             if (!(recyclerView.getLayoutManager() instanceof LinearLayoutManager))
                 throw new RuntimeException("LayoutManager must be a LinearLayoutManager");
-
             if (currentState != SCROLL_STATE_IDLE) {
-                final ExpandableRecyclerView.Adapter adapter = (Adapter) recyclerView.getAdapter();
+                final Adapter adapter = (Adapter) recyclerView.getAdapter();
                 final LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
                 for (int index = 0; index < layoutManager.getChildCount(); ++index) {
@@ -93,14 +92,12 @@ public class ExpandableRecyclerView extends RecyclerView {
                 @Override
                 public void onClick(View v) {
                     currentPosition = position;
-
                     for (int index = 0; index < layoutManager.getChildCount(); ++index) {
                         if (index != (currentPosition - layoutManager.findFirstVisibleItemPosition())) {
                             ExpandableItem currentExpandableItem = (ExpandableItem) layoutManager.getChildAt(index).findViewWithTag(ExpandableItem.TAG);
                             currentExpandableItem.hide();
                         }
                     }
-
                     ExpandableItem expandableItem = (ExpandableItem) layoutManager.getChildAt(currentPosition - layoutManager.findFirstVisibleItemPosition()).findViewWithTag(ExpandableItem.TAG);
                     if (expandableItem.isOpened())
                         expandableItem.hide();

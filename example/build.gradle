@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion rootProject.android.sdk.target
-    buildToolsVersion rootProject.android.buildTools
+    compileSdkVersion config.sdk.target
+    buildToolsVersion config.buildTools
     defaultConfig {
         applicationId 'com.example.recyclerviewexpandable'
-        minSdkVersion rootProject.android.sdk.min
-        targetSdkVersion rootProject.android.sdk.target
         versionCode 1
         versionName "1.0"
+        minSdkVersion config.sdk.min
+        targetSdkVersion config.sdk.target
+        testInstrumentationRunner config.testRunner
     }
     buildTypes {
         release {
@@ -19,7 +20,14 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile deps.junit
+    androidTestCompile(deps.testRunner) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile(deps.testEspresso) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+
     compile project(':recyclerview-expandable')
 
     compile 'com.android.support:appcompat-v7:25.3.1'
