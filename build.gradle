@@ -46,7 +46,7 @@ ext.bintray = [
         user    : 'hendraanggrian',
         group   : 'com.hendraanggrian',
         artifact: 'recyclerview-expandable',
-        version : '0.3.1',
+        version : '0.3.2',
         desc    : 'RecyclerView implementation of traex\'s ExpandableLayout.',
         website : 'https://github.com/hendraanggrian/recyclerview-expandable'
 ]

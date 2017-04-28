@@ -1,4 +1,4 @@
-package com.example.recyclerviewexpandable;
+package com.example.recyclerview_expandable;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

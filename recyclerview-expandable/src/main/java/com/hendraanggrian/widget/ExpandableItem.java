@@ -25,29 +25,26 @@ import android.content.res.TypedArray;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.hendraanggrian.recyclerview.expandable.CollapseAnimation;
-import com.hendraanggrian.recyclerview.expandable.ExpandAnimation;
+import com.hendraanggrian.recyclerview.expandable.ExpandUtils;
 import com.hendraanggrian.recyclerview.expandable.R;
 
 public class ExpandableItem extends RelativeLayout {
 
-    public static final String TAG = "io.github.hendraanggrian.widget.ExpandableItem";
+    public static final CharSequence TAG = ExpandableItem.class.getCanonicalName();
 
-    @NonNull private final FrameLayout contentLayout;
-    @NonNull private final FrameLayout headerLayout;
-
+    @NonNull private final FrameLayout layoutHeader;
+    @NonNull private final FrameLayout layoutContent;
+    private boolean isAnimationRunning = false;
+    private boolean isOpened = false;
     private int duration;
-    private boolean isAnimationRunning;
-    private boolean isOpened;
-    private boolean closeByUser = true;
+    private boolean isClosedByUser = true;
 
     public ExpandableItem(Context context) {
         this(context, null);
@@ -59,76 +56,55 @@ public class ExpandableItem extends RelativeLayout {
 
     public ExpandableItem(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        View.inflate(context, R.layout.view_expandable, this);
-        headerLayout = (FrameLayout) findViewById(R.id.view_expandable_header);
-        contentLayout = (FrameLayout) findViewById(R.id.view_expandable_content);
-
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ExpandableItem);
-        int headerID, contentID;
+        ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_expandable, this, true);
+        layoutHeader = (FrameLayout) findViewById(R.id.view_expandable_header);
+        layoutContent = (FrameLayout) findViewById(R.id.view_expandable_content);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ExpandableItem);
+        int headerId, contentId;
         try {
-            duration = array.getInt(R.styleable.ExpandableItem_duration, getContext().getResources().getInteger(android.R.integer.config_shortAnimTime));
-            headerID = array.getResourceId(R.styleable.ExpandableItem_layoutHeader, -1);
-            contentID = array.getResourceId(R.styleable.ExpandableItem_layoutContent, -1);
+            headerId = a.getResourceId(R.styleable.ExpandableItem_layoutHeader, -1);
+            contentId = a.getResourceId(R.styleable.ExpandableItem_layoutContent, -1);
+            duration = a.getInt(R.styleable.ExpandableItem_duration, getContext().getResources().getInteger(android.R.integer.config_shortAnimTime));
         } finally {
-            array.recycle();
+            a.recycle();
         }
-
-        if (headerID == -1 || contentID == -1)
+        if (headerId == -1 || contentId == -1)
             throw new IllegalArgumentException("HeaderLayout and ContentLayout cannot be null!");
-
         if (isInEditMode())
             return;
-
-        setTag(TAG);
-
-        View headerView = View.inflate(context, headerID, null);
+        View headerView = View.inflate(context, headerId, null);
         headerView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        headerLayout.addView(headerView);
-        headerLayout.setOnTouchListener(new OnTouchListener() {
+        layoutHeader.addView(headerView);
+        layoutHeader.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (isOpened() && event.getAction() == MotionEvent.ACTION_UP) {
                     hide();
-                    closeByUser = true;
+                    isClosedByUser = true;
                 }
-
                 return isOpened() && event.getAction() == MotionEvent.ACTION_DOWN;
             }
         });
-
-        View contentView = View.inflate(context, contentID, null);
-        contentView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        contentLayout.addView(contentView);
-        contentLayout.setVisibility(GONE);
-    }
-
-    @NonNull
-    public FrameLayout getHeaderLayout() {
-        return headerLayout;
-    }
-
-    @NonNull
-    public FrameLayout getContentLayout() {
-        return contentLayout;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
+        View contentView = View.inflate(context, contentId, null);
+        contentView.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        layoutContent.addView(contentView);
+        layoutContent.setVisibility(GONE);
+        setTag(TAG);
     }
 
     public void hideNow() {
-        contentLayout.getLayoutParams().height = 0;
-        contentLayout.invalidate();
-        contentLayout.setVisibility(View.GONE);
+        layoutContent.getLayoutParams().height = 0;
+        layoutContent.invalidate();
+        layoutContent.setVisibility(View.GONE);
         isOpened = false;
     }
 
     public void showNow() {
-        if (!isOpened) {
-            contentLayout.setVisibility(VISIBLE);
-            isOpened = true;
-            contentLayout.getLayoutParams().height = LayoutParams.WRAP_CONTENT;
-            contentLayout.invalidate();
+        if (!this.isOpened()) {
+            layoutContent.setVisibility(VISIBLE);
+            this.isOpened = true;
+            layoutContent.getLayoutParams().height = LayoutParams.WRAP_CONTENT;
+            layoutContent.invalidate();
         }
     }
 
@@ -138,7 +114,8 @@ public class ExpandableItem extends RelativeLayout {
 
     public void show() {
         if (!isAnimationRunning) {
-            expand(contentLayout);
+            ExpandUtils.expand(layoutContent, duration);
+            isOpened = true;
             isAnimationRunning = true;
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -147,11 +124,22 @@ public class ExpandableItem extends RelativeLayout {
                 }
             }, duration);
         }
+    }
+
+    @NonNull
+    public FrameLayout getHeaderLayout() {
+        return layoutHeader;
+    }
+
+    @NonNull
+    public FrameLayout getContentLayout() {
+        return layoutContent;
     }
 
     public void hide() {
         if (!isAnimationRunning) {
-            collapse(contentLayout);
+            ExpandUtils.collapse(layoutContent, duration);
+            isOpened = false;
             isAnimationRunning = true;
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -160,51 +148,10 @@ public class ExpandableItem extends RelativeLayout {
                 }
             }, duration);
         }
-        closeByUser = false;
+        isClosedByUser = false;
     }
 
     public boolean isClosedByUser() {
-        return closeByUser;
-    }
-
-    private void expand(@NonNull final View view) {
-        isOpened = true;
-
-        Animation animation = new ExpandAnimation(view);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                view.getLayoutParams().height = 0;
-                view.setVisibility(VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        animation.setDuration(duration);
-        view.startAnimation(animation);
-    }
-
-    private void collapse(@NonNull final View view) {
-        isOpened = false;
-
-        Animation animation = new CollapseAnimation(view) {
-            @Override
-            protected void applyTransformation(float interpolatedTime, Transformation t) {
-                if (interpolatedTime == 1) {
-                    view.setVisibility(View.GONE);
-                    isOpened = false;
-                } else {
-                    super.applyTransformation(interpolatedTime, t);
-                }
-            }
-        };
-        animation.setDuration(duration);
-        view.startAnimation(animation);
+        return isClosedByUser;
     }
 }

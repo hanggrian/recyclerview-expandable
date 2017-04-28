@@ -4,7 +4,7 @@ android {
     compileSdkVersion config.sdk.target
     buildToolsVersion config.buildTools
     defaultConfig {
-        applicationId 'com.example.recyclerviewexpandable'
+        applicationId 'com.example.recyclerview_expandable'
         versionCode 1
         versionName "1.0"
         minSdkVersion config.sdk.min

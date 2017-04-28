@@ -1,4 +1,4 @@
-package com.example.recyclerviewexpandable;
+package com.example.recyclerview_expandable;
 
 /**
  * Created by hendraanggrian on 14/06/16.

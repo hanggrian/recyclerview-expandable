@@ -7,17 +7,15 @@ RecyclerView implementation of [traex's ExpandableLayout](https://github.com/tra
 Download
 --------
 Library are hosted in [jCenter](https://bintray.com/hendraanggrian/maven/expandable-recyclerview).
-
 ```gradle
 dependencies {
-    compile 'com.hendraanggrian:recyclerview-expandable:0.3.1'
+    compile 'com.hendraanggrian:recyclerview-expandable:0.3.2'
 }
 ```
 
 Usage
 -----
 Create a row of your RecyclerView:
-
 ```xml
 <com.hendraanggrian.widget.ExpandableItem
     android:id="@+id/row"
@@ -28,19 +26,18 @@ Create a row of your RecyclerView:
     app:layoutContent="@layout/view_header"/>
 ```
 
-Create your ExpandableRecyclerView.Adapter:
-
+Create your adapter, which must extend ExpandableRecyclerView.Adapter:
 ```java
 public class MyAdapter extends ExpandableRecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    public MyAdapter(LinearLayoutManager lm) {
-        super(lm);
+    public MyAdapter(LinearLayoutManager layout) {
+        super(layout);
         ...
     }
 
     @Override
     public void onBindViewHolder(MyAdapter.ViewHolder holder, final int position) {
-        super.onBindViewHolder(holder, position); // make sure to call this line
+        super.onBindViewHolder(holder, position);
         ...
     }
 
@@ -50,34 +47,20 @@ public class MyAdapter extends ExpandableRecyclerView.Adapter<MyAdapter.ViewHold
 }
 ```
 
-Have an ExpandableRecyclerView somewhere in your app.
-
+Have an RecyclerView somewhere in your app.
 ```xml
-<com.hendraanggrian.widget.ExpandableRecyclerView
-    android:id="@+id/recyclerView"
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/recyclerview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
 ```
 
 Then pass LinearLayoutManager to the adapter:
-
 ```java
-LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-TestAdapter adapter = new TestAdapter(layoutManager);
+LinearLayoutManager layout = new LinearLayoutManager(this);
+MyAdapter adapter = new MyAdapter(layout);
 
-ExpandableLayoutRecyclerView expandableRecyclerView = (ExpandableLayoutRecyclerView) findViewById(R.id.recyclerView);
-expandableRecyclerView.setLayoutManager(layoutManager);
-expandableRecyclerView.setAdapter(adapter);
-```
-
-Using stock `RecyclerView`?
-
-```java
-LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-TestAdapter adapter = new TestAdapter(layoutManager);
-
-RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-recyclerView.addOnScrollListener(new ExpandableRecyclerView.OnExpandableScrollListener());
-recyclerView.setLayoutManager(layoutManager);
+RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+recyclerView.setLayoutManager(layout);
 recyclerView.setAdapter(adapter);
 ```

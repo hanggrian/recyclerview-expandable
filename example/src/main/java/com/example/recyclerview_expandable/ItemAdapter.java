@@ -1,4 +1,4 @@
-package com.example.recyclerviewexpandable;
+package com.example.recyclerview_expandable;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -29,8 +29,8 @@ public class ItemAdapter extends ExpandableRecyclerView.Adapter<ItemAdapter.View
     @NonNull private final Context context;
     @NonNull private final List<Item> items;
 
-    public ItemAdapter(@NonNull Context context, @NonNull LinearLayoutManager layoutManager) {
-        super(layoutManager);
+    public ItemAdapter(@NonNull Context context, @NonNull LinearLayoutManager layout) {
+        super(layout);
         this.context = context;
         this.items = new ArrayList<>();
         this.items.add(new Item(R.drawable.ic_test1, "14 Easy Weekend Getaways"));
