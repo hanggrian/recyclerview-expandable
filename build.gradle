@@ -3,52 +3,37 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'com.novoda:bintray-release:0.3.4'
     }
 }
 
 allprojects {
+    ext.versions = [
+            // android
+            sdk       : [
+                    'min'   : 9,
+                    'target': 25
+            ],
+            buildTools: '25.0.3',
+
+            // main
+            support   : '25.4.0',
+
+            release   : '0.4.0'
+    ]
     repositories {
+        maven { url "https://maven.google.com" }
         jcenter()
+    }
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-ext.config = [
-        sdk       : [
-                'min'   : 9,
-                'target': 25
-        ],
-        buildTools: '25.0.2',
-        testRunner: 'android.support.test.runner.AndroidJUnitRunner'
-]
-
-def versionJunit = '4.12'
-def versionTestRunner = '0.5'
-def versionTestEspresso = '2.2.2'
-def versionSupport = '25.3.1'
-
-ext.deps = [
-        // test
-        junit              : "junit:junit:$versionJunit",
-        // android test
-        testRunner         : "com.android.support.test:runner:$versionTestRunner",
-        testEspresso       : "com.android.support.test.espresso:espresso-core:$versionTestEspresso",
-        // android
-        supportRecyclerview: "com.android.support:recyclerview-v7:$versionSupport"
-]
-
-ext.bintray = [
-        user    : 'hendraanggrian',
-        group   : 'com.hendraanggrian',
-        artifact: 'recyclerview-expandable',
-        version : '0.3.2',
-        desc    : 'RecyclerView implementation of traex\'s ExpandableLayout.',
-        website : 'https://github.com/hendraanggrian/recyclerview-expandable'
-]
 
 //$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false

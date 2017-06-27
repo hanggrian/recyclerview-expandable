@@ -11,6 +11,7 @@ import android.view.View;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
+ * @see ExpandableItem
  */
 public class ExpandableRecyclerView extends RecyclerView {
 
@@ -28,56 +29,58 @@ public class ExpandableRecyclerView extends RecyclerView {
 
     @Override
     public void setLayoutManager(LayoutManager layout) {
-        if (!(layout instanceof LinearLayoutManager))
-            throw new IllegalArgumentException("layout manager must be an instance of LinearLayoutManager!");
+        if (!(layout instanceof LinearLayoutManager)) {
+            throw new IllegalArgumentException("lm manager must be an instance of LinearLayoutManager!");
+        }
         super.setLayoutManager(layout);
     }
 
     @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
-        if (!(adapter instanceof Adapter))
+        if (!(adapter instanceof Adapter)) {
             throw new IllegalArgumentException("adapter must be an instance of ExpandableRecyclerView.Adapter!");
+        }
         super.setAdapter(adapter);
     }
 
     public static abstract class Adapter<VH extends ViewHolder> extends RecyclerView.Adapter<VH> {
-        @NonNull private final LinearLayoutManager layout;
+        @NonNull private final LinearLayoutManager lm;
         private int currentPosition = -1;
 
-        public Adapter(@NonNull LinearLayoutManager layout) {
-            this.layout = layout;
+        public Adapter(@NonNull LinearLayoutManager lm) {
+            this.lm = lm;
         }
 
         @Override
         @CallSuper
-        public void onBindViewHolder(VH holder, int position) {
+        public void onBindViewHolder(final VH holder, int position) {
             ExpandableItem expandableItem = (ExpandableItem) holder.itemView.findViewWithTag(ExpandableItem.TAG);
-            expandableItem.setOnClickListener(getOnExpandableClickListener(position));
-            if (currentPosition != position && expandableItem.isOpened())
-                expandableItem.hideNow();
-            else if (currentPosition == position && !expandableItem.isOpened() && !expandableItem.isClosedByUser())
-                expandableItem.showNow();
-        }
-
-        @NonNull
-        protected OnClickListener getOnExpandableClickListener(final int position) {
-            return new OnClickListener() {
+            if (expandableItem == null) {
+                throw new RuntimeException("Item of this adapter must contain ExpandableItem!");
+            }
+            expandableItem.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    currentPosition = position;
-                    for (int index = 0; index < layout.getChildCount(); ++index) {
-                        if (index != (currentPosition - layout.findFirstVisibleItemPosition())) {
-                            ExpandableItem currentExpandableItem = (ExpandableItem) layout.getChildAt(index).findViewWithTag(ExpandableItem.TAG);
+                    currentPosition = holder.getLayoutPosition();
+                    for (int index = 0; index < lm.getChildCount(); ++index) {
+                        if (index != (currentPosition - lm.findFirstVisibleItemPosition())) {
+                            ExpandableItem currentExpandableItem = (ExpandableItem) lm.getChildAt(index).findViewWithTag(ExpandableItem.TAG);
                             currentExpandableItem.hide();
                         }
                     }
-                    ExpandableItem expandableItem = (ExpandableItem) layout.getChildAt(currentPosition - layout.findFirstVisibleItemPosition()).findViewWithTag(ExpandableItem.TAG);
-                    if (expandableItem.isOpened())
+                    ExpandableItem expandableItem = (ExpandableItem) lm.getChildAt(currentPosition - lm.findFirstVisibleItemPosition()).findViewWithTag(ExpandableItem.TAG);
+                    if (expandableItem.isOpened()) {
                         expandableItem.hide();
-                    else
+                    } else {
                         expandableItem.show();
+                    }
                 }
-            };
+            });
+            if (currentPosition != position && expandableItem.isOpened()) {
+                expandableItem.hideNow();
+            } else if (currentPosition == position && !expandableItem.isOpened() && !expandableItem.isClosedByUser()) {
+                expandableItem.showNow();
+            }
         }
     }
 }

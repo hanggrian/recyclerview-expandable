@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="ExpandableItemStyle">
+        <attr name="expandableItemStyle" format="reference"/>
+    </declare-styleable>
+
     <declare-styleable name="ExpandableItem">
         <attr name="duration" format="integer"/>
         <attr name="layoutHeader" format="reference"/>

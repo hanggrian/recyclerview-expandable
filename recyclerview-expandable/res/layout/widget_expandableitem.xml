@@ -2,13 +2,13 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout
-        android:id="@+id/view_expandable_header"
+        android:id="@+id/widget_expandableitem_headerlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <FrameLayout
-        android:id="@+id/view_expandable_content"
+        android:id="@+id/widget_expandableitem_contentlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view_expandable_header"/>
+        android:layout_below="@id/widget_expandableitem_headerlayout"/>
 </merge>
