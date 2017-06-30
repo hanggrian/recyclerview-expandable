@@ -1,11 +1,13 @@
 ExpandableRecyclerView
 ======================
-RecyclerView implementation of [traex's ExpandableLayout](https://github.com/traex/ExpandableLayout).
+![icon][icon]
 
-![demo][demo]
+RecyclerView implementation of [traex's ExpandableLayout](https://github.com/traex/ExpandableLayout).
 
 Usage
 -----
+![demo][demo]
+
 Create a row of your RecyclerView:
 ```xml
 <com.hendraanggrian.widget.ExpandableItem
@@ -84,4 +86,5 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
     
+[icon]: /example/res/mipmap-xxxhdpi/ic_launcher.png
 [demo]: /art/demo.gif

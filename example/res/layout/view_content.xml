@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackground"
                 android:text="Share"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="?colorAccent"/>
 
             <Button
                 android:id="@+id/button"
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackground"
                 android:text="Explore"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="?colorAccent"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
