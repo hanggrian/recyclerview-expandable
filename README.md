@@ -1,7 +1,5 @@
 ExpandableRecyclerView
 ======================
-![icon][icon]
-
 RecyclerView implementation of [traex's ExpandableLayout](https://github.com/traex/ExpandableLayout).
 
 Usage
@@ -86,5 +84,4 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
     
-[icon]: /example/res/mipmap-xxxhdpi/ic_launcher.png
 [demo]: /art/demo.gif
