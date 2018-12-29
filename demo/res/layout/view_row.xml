@@ -11,7 +11,7 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp">
 
-    <com.hendraanggrian.widget.ExpandableItem
+    <com.hendraanggrian.recyclerview.widget.ExpandableItem
         android:id="@+id/row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

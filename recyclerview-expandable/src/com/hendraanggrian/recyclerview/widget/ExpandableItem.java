@@ -18,7 +18,7 @@
  * THE SOFTWARE.
  ***********************************************************************************/
 
-package com.hendraanggrian.widget;
+package com.hendraanggrian.recyclerview.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -8,7 +8,7 @@ Usage
 
 Create a row of your RecyclerView:
 ```xml
-<com.hendraanggrian.widget.ExpandableItem
+<com.hendraanggrian.recyclerview.widget.ExpandableItem
     android:id="@+id/row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -40,7 +40,7 @@ public class MyAdapter extends ExpandableRecyclerView.Adapter<MyAdapter.ViewHold
 
 Have an `ExpandableRecyclerView` somewhere in your app, regular `RecyclerView` works too.
 ```xml
-<com.hendraanggrian.widget.ExpandableRecyclerView
+<com.hendraanggrian.recyclerview.widget.ExpandableRecyclerView
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
