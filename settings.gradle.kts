@@ -1,2 +1,2 @@
-include("recyclerview-expandable")
+include(RELEASE_ARTIFACT)
 // include("demo")

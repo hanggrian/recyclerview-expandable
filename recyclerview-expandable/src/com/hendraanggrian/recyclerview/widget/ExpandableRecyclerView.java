@@ -1,18 +1,15 @@
 package com.hendraanggrian.recyclerview.widget;
 
 import android.content.Context;
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- * @see ExpandableItem
- */
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class ExpandableRecyclerView extends RecyclerView {
 
     public ExpandableRecyclerView(Context context) {
@@ -28,7 +25,7 @@ public class ExpandableRecyclerView extends RecyclerView {
     }
 
     @Override
-    public void setLayoutManager(LayoutManager layout) {
+    public void setLayoutManager(RecyclerView.LayoutManager layout) {
         if (!(layout instanceof LinearLayoutManager)) {
             throw new IllegalArgumentException("lm manager must be an instance of LinearLayoutManager!");
         }

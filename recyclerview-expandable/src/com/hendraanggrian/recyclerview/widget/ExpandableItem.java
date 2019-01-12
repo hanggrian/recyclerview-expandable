@@ -23,8 +23,6 @@ package com.hendraanggrian.recyclerview.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.UiThread;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,12 +32,11 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.UiThread;
+
 import com.hendraanggrian.recyclerview.expandable.R;
 
-/**
- * @author Robin Chutaux
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 public class ExpandableItem extends RelativeLayout {
 
     static final String TAG = ExpandableItem.class.getCanonicalName();
