@@ -58,15 +58,17 @@ public class ExpandableItem extends RelativeLayout {
 
     public ExpandableItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        LayoutInflater inflater = LayoutInflater.from(context);
+        final LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.widget_expandableitem, this, true);
-        headerLayout = (ViewGroup) findViewById(R.id.widget_expandableitem_headerlayout);
-        contentLayout = (ViewGroup) findViewById(R.id.widget_expandableitem_contentlayout);
+        headerLayout = findViewById(R.id.widget_expandableitem_headerlayout);
+        contentLayout = findViewById(R.id.widget_expandableitem_contentlayout);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ExpandableItem, defStyleAttr, 0);
-        int headerId = a.getResourceId(R.styleable.ExpandableItem_layoutHeader, -1);
-        int contentId = a.getResourceId(R.styleable.ExpandableItem_layoutContent, -1);
-        duration = a.getInt(R.styleable.ExpandableItem_duration, context.getResources().getInteger(android.R.integer.config_shortAnimTime));
+        final TypedArray a = context.obtainStyledAttributes(
+            attrs, R.styleable.ExpandableItem, defStyleAttr, 0);
+        final int headerId = a.getResourceId(R.styleable.ExpandableItem_layoutHeader, -1);
+        final int contentId = a.getResourceId(R.styleable.ExpandableItem_layoutContent, -1);
+        duration = a.getInt(R.styleable.ExpandableItem_duration,
+            context.getResources().getInteger(android.R.integer.config_shortAnimTime));
         a.recycle();
 
         if (headerId == -1 || contentId == -1) {
@@ -76,8 +78,9 @@ public class ExpandableItem extends RelativeLayout {
             return;
         }
 
-        View headerView = inflater.inflate(headerId, headerLayout, false);
-        headerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        final View headerView = inflater.inflate(headerId, headerLayout, false);
+        headerView.setLayoutParams(new ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         headerLayout.addView(headerView);
         headerLayout.setOnTouchListener(new OnTouchListener() {
             @Override
@@ -89,8 +92,9 @@ public class ExpandableItem extends RelativeLayout {
                 return isOpened() && event.getAction() == MotionEvent.ACTION_DOWN;
             }
         });
-        View contentView = inflater.inflate(contentId, contentLayout, false);
-        contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        final View contentView = inflater.inflate(contentId, contentLayout, false);
+        contentView.setLayoutParams(new ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         contentLayout.addView(contentView);
         contentLayout.setVisibility(GONE);
 
@@ -105,10 +109,12 @@ public class ExpandableItem extends RelativeLayout {
         view.getLayoutParams().height = 0;
         view.setVisibility(VISIBLE);
 
-        Animation animation = new Animation() {
+        final Animation animation = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
-                view.getLayoutParams().height = (interpolatedTime == 1) ? LayoutParams.WRAP_CONTENT : (int) (targetHeight * interpolatedTime);
+                view.getLayoutParams().height = (interpolatedTime == 1)
+                    ? LayoutParams.WRAP_CONTENT
+                    : (int) (targetHeight * interpolatedTime);
                 view.requestLayout();
             }
         };
@@ -121,14 +127,15 @@ public class ExpandableItem extends RelativeLayout {
         isOpened = false;
         final int initialHeight = view.getMeasuredHeight();
 
-        Animation animation = new Animation() {
+        final Animation animation = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
                 if (interpolatedTime == 1) {
                     view.setVisibility(View.GONE);
                     isOpened = false;
                 } else {
-                    view.getLayoutParams().height = initialHeight - (int) (initialHeight * interpolatedTime);
+                    view.getLayoutParams().height = initialHeight -
+                        (int) (initialHeight * interpolatedTime);
                     view.requestLayout();
                 }
             }

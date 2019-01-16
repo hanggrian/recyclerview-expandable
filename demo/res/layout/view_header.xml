@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="156dp"
     android:foreground="?selectableItemBackground">
@@ -10,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="156dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_test1"/>
+        android:src="@drawable/ic_test1" />
 
     <TextView
         android:id="@+id/textView"
@@ -19,5 +18,5 @@
         android:layout_gravity="bottom"
         android:padding="16dp"
         android:text="Top 10 Australian beaches"
-        android:textAppearance="?android:textAppearanceLargeInverse"/>
+        android:textAppearance="?android:textAppearanceLargeInverse" />
 </FrameLayout>

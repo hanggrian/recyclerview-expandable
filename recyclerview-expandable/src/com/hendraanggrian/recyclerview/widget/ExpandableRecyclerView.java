@@ -12,22 +12,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ExpandableRecyclerView extends RecyclerView {
 
-    public ExpandableRecyclerView(Context context) {
+    public ExpandableRecyclerView(@NonNull Context context) {
         this(context, null);
     }
 
-    public ExpandableRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    public ExpandableRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ExpandableRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public ExpandableRecyclerView(
+        @NonNull Context context,
+        @Nullable AttributeSet attrs,
+        int defStyle
+    ) {
         super(context, attrs, defStyle);
     }
 
     @Override
     public void setLayoutManager(RecyclerView.LayoutManager layout) {
         if (!(layout instanceof LinearLayoutManager)) {
-            throw new IllegalArgumentException("lm manager must be an instance of LinearLayoutManager!");
+            throw new IllegalArgumentException("layoutManager manager must be an instance of LinearLayoutManager!");
         }
         super.setLayoutManager(layout);
     }
@@ -41,17 +45,17 @@ public class ExpandableRecyclerView extends RecyclerView {
     }
 
     public static abstract class Adapter<VH extends ViewHolder> extends RecyclerView.Adapter<VH> {
-        @NonNull private final LinearLayoutManager lm;
+        @NonNull private final LinearLayoutManager layoutManager;
         private int currentPosition = -1;
 
-        public Adapter(@NonNull LinearLayoutManager lm) {
-            this.lm = lm;
+        public Adapter(@NonNull LinearLayoutManager layoutManager) {
+            this.layoutManager = layoutManager;
         }
 
         @Override
         @CallSuper
-        public void onBindViewHolder(final VH holder, int position) {
-            ExpandableItem expandableItem = (ExpandableItem) holder.itemView.findViewWithTag(ExpandableItem.TAG);
+        public void onBindViewHolder(@NonNull final VH holder, int position) {
+            final ExpandableItem expandableItem = holder.itemView.findViewWithTag(ExpandableItem.TAG);
             if (expandableItem == null) {
                 throw new RuntimeException("Item of this adapter must contain ExpandableItem!");
             }
@@ -59,13 +63,16 @@ public class ExpandableRecyclerView extends RecyclerView {
                 @Override
                 public void onClick(View v) {
                     currentPosition = holder.getLayoutPosition();
-                    for (int index = 0; index < lm.getChildCount(); ++index) {
-                        if (index != (currentPosition - lm.findFirstVisibleItemPosition())) {
-                            ExpandableItem currentExpandableItem = (ExpandableItem) lm.getChildAt(index).findViewWithTag(ExpandableItem.TAG);
+                    for (int index = 0; index < layoutManager.getChildCount(); ++index) {
+                        if (index != (currentPosition - layoutManager.findFirstVisibleItemPosition())) {
+                            final ExpandableItem currentExpandableItem =
+                                layoutManager.getChildAt(index).findViewWithTag(ExpandableItem.TAG);
                             currentExpandableItem.hide();
                         }
                     }
-                    ExpandableItem expandableItem = (ExpandableItem) lm.getChildAt(currentPosition - lm.findFirstVisibleItemPosition()).findViewWithTag(ExpandableItem.TAG);
+                    final ExpandableItem expandableItem = layoutManager
+                        .getChildAt(currentPosition - layoutManager.findFirstVisibleItemPosition())
+                        .findViewWithTag(ExpandableItem.TAG);
                     if (expandableItem.isOpened()) {
                         expandableItem.hide();
                     } else {
@@ -75,7 +82,9 @@ public class ExpandableRecyclerView extends RecyclerView {
             });
             if (currentPosition != position && expandableItem.isOpened()) {
                 expandableItem.hideNow();
-            } else if (currentPosition == position && !expandableItem.isOpened() && !expandableItem.isClosedByUser()) {
+            } else if (currentPosition == position &&
+                !expandableItem.isOpened() &&
+                !expandableItem.isClosedByUser()) {
                 expandableItem.showNow();
             }
         }

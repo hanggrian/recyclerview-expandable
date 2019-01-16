@@ -29,9 +29,6 @@ android {
             resources.srcDir("tests/src")
         }
     }
-    lintOptions {
-        isCheckTestSources = true
-    }
     libraryVariants.all {
         generateBuildConfigProvider?.configure {
             enabled = false
@@ -46,6 +43,8 @@ dependencies {
     testImplementation(truth())
     androidTestImplementation(truth())
     androidTestImplementation(kotlin("stdlib", VERSION_KOTLIN))
+    androidTestImplementation(kotlin("test", VERSION_KOTLIN))
+    androidTestImplementation(androidx("appcompat", version = "1.0.0"))
     androidTestImplementation(androidx("test.espresso", "espresso-core", VERSION_ESPRESSO))
     androidTestImplementation(androidx("test", "runner", VERSION_RUNNER))
     androidTestImplementation(androidx("test", "rules", VERSION_RULES))

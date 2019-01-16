@@ -1,13 +1,11 @@
-package com.example.recyclerview_expandable
+package com.hendraanggrian.expandable.demo
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.recyclerview_expandable.R
 import kotlinx.android.synthetic.main.activity_main.*
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
