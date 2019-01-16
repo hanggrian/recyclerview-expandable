@@ -1,6 +1,24 @@
 ExpandableRecyclerView
 ======================
+[![bintray](https://img.shields.io/badge/bintray-recyclerview-brightgreen.svg)](https://bintray.com/hendraanggrian/recyclerview)
+[![download](https://api.bintray.com/packages/hendraanggrian/recyclerview/recyclerview-expandable/images/download.svg)](https://bintray.com/hendraanggrian/recyclerview/recyclerview-expandable/_latestVersion)
+[![build](https://travis-ci.com/hendraanggrian/recyclerview-expandable.svg)](https://travis-ci.com/hendraanggrian/recyclerview-expandable)
+[![license](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+
 RecyclerView implementation of [traex's ExpandableLayout](https://github.com/traex/ExpandableLayout).
+
+Download
+--------
+```gradle
+repositories {
+    google()
+    jcenter()
+}
+
+dependencies {
+    compile "com.hendraanggrian.recyclerview:recyclerview-expandable:$version"
+}
+```
 
 Usage
 -----
@@ -53,19 +71,6 @@ RecyclerView.Adapter adapter = new MyAdapter(layout);
 
 recyclerView.setLayoutManager(layout);
 recyclerView.setAdapter(adapter);
-```
-
-Download
---------
-```gradle
-repositories {
-    maven { url "https://maven.google.com" }
-    jcenter()
-}
-
-dependencies {
-    compile 'com.hendraanggrian:recyclerview-expandable:0.4.0'
-}
 ```
 
 License
