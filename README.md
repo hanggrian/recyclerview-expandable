@@ -1,10 +1,10 @@
-ExpandableRecyclerView
-======================
 [![bintray](https://img.shields.io/badge/bintray-recyclerview-brightgreen.svg)](https://bintray.com/hendraanggrian/recyclerview)
 [![download](https://api.bintray.com/packages/hendraanggrian/recyclerview/recyclerview-expandable/images/download.svg)](https://bintray.com/hendraanggrian/recyclerview/recyclerview-expandable/_latestVersion)
 [![build](https://travis-ci.com/hendraanggrian/recyclerview-expandable.svg)](https://travis-ci.com/hendraanggrian/recyclerview-expandable)
 [![license](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
+Expandable RecyclerView
+=======================
 RecyclerView implementation of [traex's ExpandableLayout](https://github.com/traex/ExpandableLayout).
 
 Download
@@ -88,5 +88,5 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-    
+
 [demo]: /art/demo.gif
