@@ -1,6 +1,6 @@
 [![download](https://api.bintray.com/packages/hendraanggrian/recyclerview/recyclerview-expandable/images/download.svg)](https://bintray.com/hendraanggrian/recyclerview/recyclerview-expandable/_latestVersion)
 [![build](https://travis-ci.com/hendraanggrian/recyclerview-expandable.svg)](https://travis-ci.com/hendraanggrian/recyclerview-expandable)
-[![license](https://img.shields.io/github/license/hendraanggrian/recyclerview-paginated)](http://www.apache.org/licenses/LICENSE-2.0)
+[![license](https://img.shields.io/github/license/hendraanggrian/recyclerview-expandable)](http://www.apache.org/licenses/LICENSE-2.0)
 
 Expandable RecyclerView
 =======================
